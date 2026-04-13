@@ -1,0 +1,93 @@
+================================================================================
+  SYNCHRONISER CURSOR (Mac) ↔ CURSOR (Windows) + CE PROJET SITE
+================================================================================
+
+Il y a DEUX choses distinctes :
+  A) Réglages / extensions Cursor (via le compte + Settings Sync)
+  B) Fichiers du dossier SITE (via Git + GitHub ou autre dépôt distant)
+
+Ce fichier + le dépôt Git sur ce Mac couvrent (B). Pour (A), suis la partie 1.
+
+--------------------------------------------------------------------------------
+1) MÊME COMPTE CURSOR + SYNCHRONISATION DES RÉGLAGES (Mac et Windows)
+--------------------------------------------------------------------------------
+
+1. Sur les DEUX ordinateurs : installe Cursor et connecte-toi avec le MÊME compte
+   (même email / même fournisseur de connexion).
+
+2. Active « Settings Sync » (comme dans VS Code) :
+   - Ouvre la palette de commandes : Cmd+K Cmd+P (Mac) ou Ctrl+Shift+P (Windows)
+   - Tape :  Turn on Settings Sync
+   - Choisis ce que tu veux synchroniser (réglages, raccourcis, extensions…)
+   - Connecte-toi avec GitHub ou Microsoft si demandé
+
+3. Sur l’autre machine, répète « Turn on Settings Sync » avec le même compte.
+
+Résultat : thème, taille de police, extensions, etc. se rapprochent entre les deux
+machines. Ce n’est PAS une copie de tes dossiers de projet.
+
+Chemins utiles (fichier settings.json) :
+  Mac     :  ~/Library/Application Support/Cursor/User/settings.json
+  Windows :  %APPDATA%\Cursor\User\settings.json
+
+--------------------------------------------------------------------------------
+2) SYNCHRONISER LE DOSSIER SITE (fichiers du projet) AVEC GIT
+--------------------------------------------------------------------------------
+
+Sur CE Mac, le dépôt Git est déjà initialisé avec un premier commit.
+
+Étapes À FAIRE TOI-MÊME (une fois) :
+
+  a) Crée un dépôt VIDE sur GitHub (sans README) :
+     https://github.com/new
+     Exemple de nom :  SITE-mozarf  (privé recommandé)
+
+  b) Sur CE Mac, dans le dossier SITE, exécute (remplace USER et REPO) :
+
+     cd /Users/mozarf/Desktop/DEV/SITE
+     git remote add origin https://github.com/USER/REPO.git
+     git push -u origin main
+
+     Si GitHub demande un mot de passe : utilise un « Personal Access Token »
+     (GitHub → Settings → Developer settings → Personal access tokens),
+     pas le mot de passe du site.
+
+  c) Sur le PC WINDOWS :
+
+     - Installe Git : https://git-scm.com/download/win
+     - Ouvre « Git Bash » ou PowerShell, puis :
+
+       cd %USERPROFILE%\Desktop
+       git clone https://github.com/USER/REPO.git SITE
+       cursor SITE
+
+     (Adapte le chemin où tu veux cloner.)
+
+  d) Ensuite, à chaque session :
+     Mac     :  git add -A && git commit -m "message" && git push
+     Windows :  git pull   (avant de travailler)
+                puis à la fin :  git add -A && git commit -m "message" && git push
+
+--------------------------------------------------------------------------------
+3) CE QUI N’EST PAS DANS GIT (à refaire ou copier sur Windows)
+--------------------------------------------------------------------------------
+
+  - Dossier  vst3sdk/     (ignoré : gros SDK avec son propre Git)
+  - Dossier  IA-ORCHESTRAL/node_modules/  (ignoré : à régénérer avec npm install)
+
+--------------------------------------------------------------------------------
+4) APERÇU LOCAL mozarf-shopify-preview.html
+--------------------------------------------------------------------------------
+
+Depuis la racine SITE :
+
+  cd /Users/mozarf/Desktop/DEV/SITE
+  python3 -m http.server 8765 --bind 127.0.0.1
+
+Puis navigateur :  http://127.0.0.1:8765/platform-preview/mozarf-shopify-preview.html
+
+Sur Windows : même commande dans le dossier SITE cloné, même URL.
+
+================================================================================
+Fin du guide — garde ce fichier dans le dépôt pour t’y retrouver sur Windows.
+================================================================================
