@@ -1,0 +1,33 @@
+═══════════════════════════════════════════════════════════════
+  Où est le « lien » de l’app ?
+═══════════════════════════════════════════════════════════════
+
+Il n’y a PAS de page à ouvrir en double-cliquant index.html dans le
+Finder. Le navigateur ne peut pas charger l’application comme ça.
+
+Le lien n’existe qu’APRÈS avoir démarré le serveur dans le Terminal :
+
+  cd "/Users/mozarf/Desktop/DEV/SITE/IA-ORCHESTRAL"
+  npm install
+  npm run dev
+
+Ensuite le Terminal affiche une ligne du type :
+
+  ➜  Local:   http://127.0.0.1:5173/
+
+C’est CETTE adresse à copier dans Chrome / Safari / Firefox.
+(Si le port 5173 est pris, Vite affiche 5174, 5175, etc. — utilise
+exactement ce qu’indique le Terminal.)
+
+Pour arrêter le serveur : Ctrl+C dans la fenêtre du Terminal.
+
+───────────────────────────────────────────────────────────────
+  Variante : version déjà compilée (dossier dist/)
+
+  npm run build
+  npm run preview
+
+Puis ouvre l’URL affichée (souvent http://127.0.0.1:4173/).
+
+───────────────────────────────────────────────────────────────
+  Plus de détails : LIREMOI.txt

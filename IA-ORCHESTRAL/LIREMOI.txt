@@ -1,0 +1,61 @@
+IA ORCHESTRAL — comment ouvrir la page
+======================================
+
+IMPORTANT — Pas de lien dans le dossier
+-----------------------------------------
+Tu ne peux pas ouvrir « index.html » au double-clic : ça ne marchera pas.
+Le lien (http://127.0.0.1:5173/ ou autre port) n’apparaît qu’après
+« npm run dev » dans le Terminal. Voir aussi OUVRIR_APP.txt à la racine.
+
+Qu’est-ce que c’est ?
+---------------------
+Une application web (React + Vite) : piano multisample (Salamander), modes, accords
+diatoniques, composition assistée. Ce n’est pas un plugin VST / AU pour une DAW.
+
+Ne pas ouvrir index.html avec un double-clic dans le Finder : le navigateur ne
+pourra pas charger les modules JavaScript (écran vide ou erreurs).
+
+1) Installer Node.js (LTS) si besoin : https://nodejs.org/
+
+2) (Optionnel) Composition IA via Claude : copie .env.example vers .env et mets ta clé :
+
+   ANTHROPIC_API_KEY=sk-ant-...
+
+   Sans clé, l’app utilise les mélodies locales (fallback). Sans .env, le navigateur
+   ne peut pas appeler api.anthropic.com (CORS) : en dev, Vite proxy /anthropic-api
+   avec la clé côté serveur uniquement.
+
+2bis) Dans le Terminal :
+
+   cd "/Users/mozarf/Desktop/DEV/SITE/IA-ORCHESTRAL"
+   npm install
+   npm run dev
+
+   React DevTools (fenêtre séparée, déjà dans package.json) :
+
+   npm run dev:with-devtools
+
+   (Vite + react-devtools sur le port 8097 ; la page localhost charge le script de liaison.)
+
+3) Quand le terminal affiche « Local: … », ouvre dans le navigateur :
+
+   http://127.0.0.1:5173/
+
+   (Si le port est occupé, Vite propose un autre numéro : utilise exactement
+   l’URL affichée dans le terminal.)
+
+Tester la version « production » (build optimisé, toujours via un petit serveur) :
+
+   npm run build
+   npm run preview
+
+   Puis ouvre : http://127.0.0.1:4173/  (le terminal affiche l’URL exacte si le port change)
+
+   Note : preview sert le dossier dist/ ; ce n’est pas un double-clic sur un fichier HTML.
+
+Échantillons piano (Salamander) — obligatoire (16 couches de vélocité) :
+
+   npm run fetch-samples
+
+   Environ 468 fichiers MP3 dans public/piano-audio/ (voir ATTRIBUTION.txt).
+   À relancer après mise à jour du script si besoin.

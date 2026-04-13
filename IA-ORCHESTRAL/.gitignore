@@ -1,0 +1,6 @@
+node_modules/
+dist/
+public/piano-audio/
+.env
+.env.local
+.env.*.local

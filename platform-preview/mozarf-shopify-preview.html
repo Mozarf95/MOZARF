@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prévisualisation — MOZARF (Shopify)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=UnifrakturMaguntia&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../shopify-mozarf-theme/assets/mozarf-platform.css" />
+  <style>
+    #mozarf-platform-root .filters {
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="mozarf-platform-root">
+    <header class="top">
+      <div class="top-inner">
+        <a href="#" class="brand" id="logo-home" aria-label="Accueil">MOZ<span>ARF</span></a>
+        <div class="search-wrap">
+          <input type="search" class="search" placeholder="Beats, albums, producteurs…" id="search-input" />
+        </div>
+        <div class="top-actions">
+          <button type="button" class="btn btn-ghost">Vendre</button>
+          <span id="user-pill" class="user-pill hidden" title="Compte"></span>
+          <a href="https://www.mozarf.com/account/login" class="btn btn-ghost" id="btn-connexion">Connexion</a>
+          <button type="button" class="btn btn-ghost hidden" id="btn-logout">Déconnexion</button>
+          <a href="https://www.mozarf.com/cart" class="btn btn-accent">Panier · 0</a>
+        </div>
+      </div>
+    </header>
+
+    <div id="view-home" class="view is-active">
+      <div class="filters">
+        <span class="filters-label">Filtrer</span>
+        <button type="button" class="chip is-on" data-filter="all">Tout</button>
+        <button type="button" class="chip" data-filter="single">Singles</button>
+        <button type="button" class="chip" data-filter="album">Albums</button>
+      </div>
+
+      <div class="main">
+        <h2 class="section-title font-display">Catalogue démo</h2>
+        <div class="grid" id="catalog-grid"></div>
+      </div>
+    </div>
+
+    <div id="view-detail" class="view">
+      <div class="detail-back">
+        <button type="button" id="btn-back">← Retour au catalogue</button>
+      </div>
+      <article class="bc-release" id="detail-root"></article>
+    </div>
+
+    <div id="view-login" class="view">
+      <div class="auth-page">
+        <div class="auth-back">
+          <button type="button" id="btn-back-login">← Retour</button>
+        </div>
+        <header class="auth-head">
+          <h1 class="font-display">CONNEXION</h1>
+          <p>Prévisualisation locale.</p>
+        </header>
+        <div class="auth-grid">
+          <div class="auth-panel">
+            <h2>Se connecter</h2>
+            <p class="auth-hint">Démo locale : formulaire factice.</p>
+            <div id="login-loading" class="auth-loading" aria-live="polite">Connexion en cours…</div>
+            <div id="login-success" class="auth-success" role="status">
+              <strong>Connecté (démo).</strong>
+            </div>
+            <form id="login-form" novalidate>
+              <div class="field">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" name="email" autocomplete="username" placeholder="toi@email.com" required />
+              </div>
+              <div class="field">
+                <label for="login-password">Mot de passe</label>
+                <input type="password" id="login-password" name="password" autocomplete="current-password" placeholder="••••••••" required />
+              </div>
+              <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 0.25rem">Entrer</button>
+            </form>
+            <p style="margin: 1rem 0 0; font-size: 0.85rem; color: var(--muted)">
+              <a href="https://www.mozarf.com/account/register" id="link-signup">Créer un compte</a>
+            </p>
+          </div>
+          <div class="auth-panel steps-panel">
+            <h2>Après connexion</h2>
+            <p class="steps-lead">Feuille de route indicative.</p>
+            <ol class="steps-list" id="steps-list">
+              <li class="is-next" data-step="1">
+                Vérification du compte
+                <span>Email ou OTP.</span>
+              </li>
+              <li data-step="2">
+                Profil
+                <span>Infos et commandes.</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>MOZARF — prévisualisation locale (thème Shopify)</footer>
+
+    <div id="audio-dock" class="audio-dock hidden" aria-live="polite">
+      <div class="audio-dock-inner">
+        <button type="button" class="audio-dock-play" id="audio-dock-play" aria-label="Pause / lecture">❚❚</button>
+        <div class="audio-dock-meta">
+          <span class="audio-dock-title" id="audio-dock-title">Préécoute</span>
+          <span class="audio-dock-time" id="audio-dock-time">0:00 / 0:00</span>
+        </div>
+        <input type="range" class="audio-dock-seek" id="audio-dock-seek" min="0" max="1000" value="0" aria-label="Position dans la piste" />
+      </div>
+      <audio id="buckcamp-audio" preload="metadata"></audio>
+    </div>
+  </div>
+
+  <script>
+    window.__MOZARF_SHOPIFY_STORE__ = true;
+    window.__MOZARF_DROP_ACTIVE_UNTIL__ = "2000-01-01T00:00:00";
+    window.__MOZARF_SHOPIFY_PRODUCTS__ = [
+      {
+        id: 91001,
+        handle: "gloria-imperi",
+        title: "Gloria Imperi",
+        vendor: "MOZARFMUZIK",
+        product_type: "Album",
+        price_cents: 2200,
+        price_formatted: "22,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["album", "krump", "cinéma"],
+        description_plain:
+          "Album maquette — esthétique monochrome, tension cinématographique et énergie krump.",
+        published_at: "8 avr. 2026",
+        image: "https://placehold.co/800x800/1a1a1a/e8ff4a/png?text=Gloria+Imperi"
+      },
+      {
+        id: 91002,
+        handle: "maelstrom",
+        title: "MAELSTROM",
+        vendor: "MOZARFMUZIK",
+        product_type: "Album",
+        price_cents: 2800,
+        price_formatted: "28,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["album", "krump"],
+        description_plain: "10 titres — démo catalogue BUCKCAMP / MOZARF.",
+        published_at: "2025",
+        image: "https://placehold.co/800x800/2a1018/ff3d5c/png?text=MAELSTROM"
+      },
+      {
+        id: 91003,
+        handle: "session-debutant-vol-1",
+        title: "SESSION DÉBUTANT VOL.1",
+        vendor: "BEAT COLLECTIF",
+        product_type: "Album",
+        price_cents: 3500,
+        price_formatted: "35,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["pack", "débutant", "album"],
+        description_plain: "12 morceaux pour entrer dans le son krump.",
+        published_at: "15 janv. 2025",
+        image: "https://placehold.co/800x800/2a1f08/ffc233/png?text=SESSION+VOL1"
+      },
+      {
+        id: 91004,
+        handle: "expert-championship-kit",
+        title: "EXPERT — CHAMPIONSHIP KIT",
+        vendor: "CYPH K",
+        product_type: "Album",
+        price_cents: 5500,
+        price_formatted: "55,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["pack", "expert", "hot", "album"],
+        description_plain: "15 morceaux, variations de BPM et de tension pour battles avancés.",
+        published_at: "3 avril 2025",
+        image: "https://placehold.co/800x800/1a0828/e8ff4a/png?text=CHAMPIONSHIP"
+      },
+      {
+        id: 91005,
+        handle: "night-sessions",
+        title: "NIGHT SESSIONS",
+        vendor: "MOZARF",
+        product_type: "Album",
+        price_cents: 4200,
+        price_formatted: "42,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["album", "story"],
+        description_plain: "14 morceaux, arc d’une soirée session jusqu’au matin.",
+        published_at: "8 avril 2025",
+        image: "https://placehold.co/800x800/0a1628/4d8f82/png?text=NIGHT+SESSIONS"
+      },
+      {
+        id: 92001,
+        handle: "iron-stomp",
+        title: "IRON STOMP",
+        vendor: "CYPH K",
+        product_type: "Single",
+        price_cents: 1500,
+        price_formatted: "15,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["krump", "session"],
+        description_plain: "Kick lourd, silence tactique, drop pour battle.",
+        published_at: "12 mars 2025",
+        image: "https://placehold.co/800x800/1a0a0a/ff3d5c/png?text=IRON+STOMP"
+      },
+      {
+        id: 92002,
+        handle: "glitch-knee",
+        title: "GLITCH KNEE",
+        vendor: "RAW SECTION",
+        product_type: "Single",
+        price_cents: 1200,
+        price_formatted: "12,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["krump", "expé"],
+        description_plain: "Texture glitch + gros 808.",
+        published_at: "2 avril 2025",
+        image: "https://placehold.co/800x800/0e1a12/e8ff4a/png?text=GLITCH+KNEE"
+      },
+      {
+        id: 92003,
+        handle: "hall-of-sweat",
+        title: "HALL OF SWEAT",
+        vendor: "MOZARF",
+        product_type: "Single",
+        price_cents: 1800,
+        price_formatted: "18,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["krump", "anthem"],
+        description_plain: "Ambiance salle, montée progressive.",
+        published_at: "28 févr. 2025",
+        image: "https://placehold.co/800x800/121820/ffc233/png?text=HALL+OF+SWEAT"
+      },
+      {
+        id: 92004,
+        handle: "concrete-soul",
+        title: "CONCRETE SOUL",
+        vendor: "RAW SECTION",
+        product_type: "Single",
+        price_cents: 1500,
+        price_formatted: "15,00 €",
+        url: "https://www.mozarf.com/collections/frontpage",
+        tags: ["krump", "minimal"],
+        description_plain: "Minimal, gros espace pour le corps.",
+        published_at: "20 mars 2025",
+        image: "https://placehold.co/800x800/1c1c1c/e8ff4a/png?text=CONCRETE+SOUL"
+      }
+    ];
+  </script>
+  <script src="../shopify-mozarf-theme/assets/mozarf-platform.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prévisualisation — MOZARF lecteur release (thème local)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/mozarf-release.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #1a1a1a;
+      }
+      .preview-banner {
+        font-family: system-ui, sans-serif;
+        font-size: 0.85rem;
+        color: #94a3b8;
+        padding: 0.75rem 1.25rem;
+        background: #0f172a;
+        border-bottom: 1px solid #334155;
+      }
+      .preview-banner code {
+        color: #e2e8f0;
+      }
+      .preview-banner a {
+        color: #93c5fd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-banner">
+      Aperçu statique : <code>shopify-mozarf-theme/preview/index.html</code> — mêmes HTML/CSS/JS que la section
+      <strong>MOZARF — lecteur release</strong>. Les fichiers <code>.liquid</code> (grille, facets, cartes) ne
+      s’exécutent pas ici ; ouvre ce fichier via un serveur local si besoin (chemins relatifs).
+      <a href="../sections/mozarf-release-player.liquid">Voir le Liquid</a>
+    </div>
+
+    <!-- Structure calquée sur sections/mozarf-release-player.liquid (sortie Shopify) -->
+    <div
+      class="mozarf-release mozarf-release-player mozarf-release--fullbleed"
+      data-mozarf-root
+      data-preview-static
+    >
+      <script type="application/json" data-mozarf-config>
+        {
+          "artist": "MOZARF",
+          "cover": "https://placehold.co/800x800/141416/f4f4f5/png?text=Album",
+          "tracks": [
+            {
+              "title": "Démo piste 1",
+              "src": "https://cdn.shopify.com/s/files/1/0651/6660/6573/files/HEALTH_AND_HOPE_MAST_V2.mp3?v=1775581382",
+              "previewOnly": false,
+              "productUrl": "https://www.mozarf.com"
+            },
+            {
+              "title": "Démo piste 2",
+              "src": "https://cdn.shopify.com/s/files/1/0651/6660/6573/files/MEDIANT_CYBER_MIX_MAST_V2.mp3?v=1775581381",
+              "previewOnly": false,
+              "productUrl": ""
+            },
+            {
+              "title": "Exemple verrouillé",
+              "src": "",
+              "previewOnly": true,
+              "productUrl": ""
+            }
+          ]
+        }
+      </script>
+
+      <main>
+        <section class="hero" id="mozarf-release-preview">
+          <div class="hero__art">
+            <img
+              src="https://placehold.co/800x800/141416/f4f4f5/png?text=MOZARF"
+              alt="Pochette démo"
+              width="800"
+              height="800"
+              loading="lazy"
+            />
+          </div>
+          <div class="hero__meta">
+            <p class="eyebrow">Nouvelle sortie</p>
+            <h1 class="title">Album démo prévisualisation</h1>
+            <p class="artist">MOZARF</p>
+            <p class="tagline">Écoutez en streaming intégral après achat — pré-écoute ci-dessous.</p>
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#mozarf-buy-preview">Acheter</a>
+              <button type="button" class="btn btn--ghost mozarf-js-play-all">Lire depuis le début</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="tracklist-section">
+          <h2 class="section-title">Morceaux</h2>
+          <ol class="tracklist mozarf-tracklist"></ol>
+        </section>
+
+        <section class="purchase" id="mozarf-buy-preview">
+          <div class="purchase__card">
+            <h2 class="section-title">Formats</h2>
+            <ul class="formats">
+              <li>Téléchargement HD — WAV + MP3 320</li>
+              <li>Streaming intégral — accès sur cette page</li>
+            </ul>
+            <a
+              class="btn btn--primary btn--block"
+              href="https://www.mozarf.com"
+              target="_blank"
+              rel="noopener"
+              >Ouvrir la boutique</a
+            >
+            <p class="fineprint">Prévisualisation locale — données de démo.</p>
+          </div>
+        </section>
+      </main>
+
+      <div class="player-bar mozarf-player-bar" id="playerBar-preview" aria-hidden="true">
+        <div class="player-bar__inner">
+          <div class="player-bar__track">
+            <img
+              class="player-bar__thumb mozarf-player-thumb"
+              src="https://placehold.co/96x96/141416/f4f4f5/png?text=M"
+              alt=""
+              width="48"
+              height="48"
+              loading="lazy"
+            />
+            <div class="player-bar__text">
+              <span class="player-bar__title mozarf-player-title">—</span>
+              <span class="player-bar__artist mozarf-player-artist">MOZARF</span>
+            </div>
+          </div>
+          <div class="player-bar__controls">
+            <button type="button" class="icon-btn mozarf-js-prev" aria-label="Morceau précédent">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6 6h2v12H6V6zm11 12l-8-6 8-6v12z" />
+              </svg>
+            </button>
+            <button type="button" class="icon-btn icon-btn--play mozarf-js-toggle-play" aria-label="Lecture / pause">
+              <svg class="ico-play" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7L8 5z" />
+              </svg>
+              <svg class="ico-pause" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="display: none">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              </svg>
+            </button>
+            <button type="button" class="icon-btn mozarf-js-next" aria-label="Morceau suivant">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+              </svg>
+            </button>
+          </div>
+          <div class="player-bar__scrub">
+            <span class="time mozarf-time-current">0:00</span>
+            <div
+              class="scrub mozarf-scrub"
+              role="slider"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              tabindex="0"
+            >
+              <div class="scrub__fill mozarf-scrub-fill"></div>
+            </div>
+            <span class="time mozarf-time-total">0:00</span>
+          </div>
+          <div class="player-bar__vol">
+            <button type="button" class="icon-btn mozarf-js-mute" aria-label="Couper le son">
+              <svg class="ico-vol" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M3 10v4h4l5 5V5L7 10H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"
+                />
+              </svg>
+            </button>
+            <input type="range" class="vol-range mozarf-vol-range" min="0" max="1" step="0.01" value="1" aria-label="Volume" />
+          </div>
+        </div>
+        <audio class="mozarf-audio" preload="metadata"></audio>
+      </div>
+    </div>
+
+    <script src="../assets/mozarf-release-player.js" defer></script>
+  </body>
+</html>

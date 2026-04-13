@@ -1,0 +1,3136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BUCKCAMP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=UnifrakturMaguntia&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #0c0c0e;
+      --bg-elevated: #141418;
+      --surface: #1a1a20;
+      --line: #2a2a32;
+      --ink: #f4f2ed;
+      --muted: #8a8694;
+      --accent: #e8ff4a;
+      --accent-dim: #c4d63a;
+      --hot: #ff3d5c;
+      --gold: #ffc233;
+      --shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Schibsted Grotesk", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--ink);
+      background: var(--bg);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-display {
+      font-family: "Bebas Neue", "Schibsted Grotesk", Roboto, "Helvetica Neue", sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--ink);
+    }
+
+    /* ——— Top bar ——— */
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(12, 12, 14, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-family: "Bebas Neue", "Schibsted Grotesk", sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .brand:hover {
+      color: var(--accent);
+    }
+
+    .brand:hover span {
+      color: var(--ink);
+    }
+
+    .search-wrap {
+      flex: 1;
+      min-width: 180px;
+      max-width: 420px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.9rem;
+    }
+
+    .search::placeholder {
+      color: var(--muted);
+    }
+
+    .search:focus {
+      outline: none;
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 3px rgba(232, 255, 74, 0.12);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover {
+      color: var(--ink);
+      border-color: var(--muted);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #0c0c0e;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-dim);
+    }
+
+    .btn-hot {
+      background: var(--hot);
+      color: #fff;
+    }
+
+    .btn-hot:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-outline-light {
+      background: transparent;
+      color: #e8e6e3;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-outline-light:hover {
+      border-color: #fff;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* ——— Fond plein écran + parallax scroll (pas d’anim auto, pas de souris) ——— */
+    #view-home {
+      position: relative;
+      z-index: 1;
+    }
+
+    .drop-page-bg-root {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 1;
+    }
+
+    .drop-page-bg-root.is-faded {
+      opacity: 0;
+    }
+
+    .drop-parallax-bg {
+      position: absolute;
+      left: -15%;
+      right: -15%;
+      top: -18%;
+      bottom: -18%;
+      background-image: url("assets/gloria-imperi-cover.png");
+      /* auto + hauteur : ratio natif de la pochette, jamais étiré. */
+      background-size: auto min(142vh, 220%);
+      background-position: center 22%;
+      background-repeat: no-repeat;
+      will-change: transform;
+      transform-origin: center 35%;
+    }
+
+    .drop-parallax-ground {
+      position: absolute;
+      left: -12%;
+      right: -12%;
+      bottom: -22%;
+      height: 58%;
+      background-image: url("assets/gloria-imperi-cover.png");
+      background-size: auto min(88vh, 200%);
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      opacity: 0.9;
+      will-change: transform;
+      transform-origin: center bottom;
+      -webkit-mask-image: linear-gradient(to top, #000 50%, transparent 100%);
+      mask-image: linear-gradient(to top, #000 50%, transparent 100%);
+    }
+
+    .drop-parallax-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(4, 4, 6, 0.35) 0%,
+        rgba(6, 6, 8, 0.5) 38%,
+        rgba(8, 8, 10, 0.82) 88%,
+        rgba(10, 10, 12, 0.92) 100%
+      );
+    }
+
+    /* ——— Drop hero (fenêtre ~7j, voir DROP_CAMPAIGN en JS) ——— */
+    .drop-hero {
+      position: relative;
+      z-index: 2;
+      min-height: min(92vh, 920px);
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+    }
+
+    .drop-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.25rem 1.25rem 3rem;
+      display: grid;
+      gap: 2.25rem;
+      align-items: center;
+    }
+
+    @media (min-width: 960px) {
+      .drop-hero-inner {
+        grid-template-columns: 1fr 1fr;
+        min-height: min(78vh, 820px);
+      }
+    }
+
+    .drop-copy {
+      order: 2;
+    }
+
+    @media (min-width: 960px) {
+      .drop-copy {
+        order: 1;
+      }
+    }
+
+    .drop-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(232, 230, 227, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    .drop-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--hot);
+      box-shadow: 0 0 12px var(--hot);
+    }
+
+    .drop-artist-line {
+      font-family: Cinzel, "Schibsted Grotesk", serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: rgba(232, 230, 227, 0.55);
+      margin: 1rem 0 0;
+    }
+
+    .drop-title {
+      font-family: "UnifrakturMaguntia", "Times New Roman", serif;
+      font-size: clamp(2.75rem, 9vw, 4.75rem);
+      line-height: 1.02;
+      margin: 0.35rem 0 0;
+      font-weight: 400;
+      color: #eceae6;
+      text-shadow: 0 0 80px rgba(255, 255, 255, 0.08), 0 12px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    .drop-tagline {
+      margin: 1rem 0 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(232, 230, 227, 0.65);
+      max-width: 38ch;
+      line-height: 1.55;
+    }
+
+    .drop-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.5rem;
+      align-items: center;
+    }
+
+    .drop-preview-strip {
+      margin-top: 1.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .drop-preview-play {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .drop-preview-play:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: scale(1.05);
+    }
+
+    .drop-wave {
+      flex: 1;
+      min-width: 120px;
+      height: 36px;
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .drop-wave span {
+      flex: 1;
+      height: 55%;
+      align-self: flex-end;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.42));
+      border-radius: 2px;
+    }
+
+    .drop-wave span:nth-child(1) {
+      height: 40%;
+    }
+    .drop-wave span:nth-child(2) {
+      height: 70%;
+    }
+    .drop-wave span:nth-child(3) {
+      height: 50%;
+    }
+    .drop-wave span:nth-child(4) {
+      height: 85%;
+    }
+    .drop-wave span:nth-child(5) {
+      height: 45%;
+    }
+    .drop-wave span:nth-child(6) {
+      height: 95%;
+    }
+    .drop-wave span:nth-child(7) {
+      height: 55%;
+    }
+    .drop-wave span:nth-child(8) {
+      height: 65%;
+    }
+
+    .drop-preview-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(232, 230, 227, 0.45);
+      width: 100%;
+      margin: 0;
+    }
+
+    @media (min-width: 520px) {
+      .drop-preview-label {
+        width: auto;
+        margin: 0;
+      }
+    }
+
+    .drop-cover-wrap {
+      order: 1;
+      perspective: 1400px;
+    }
+
+    @media (min-width: 960px) {
+      .drop-cover-wrap {
+        order: 2;
+      }
+    }
+
+    .drop-cover-frame {
+      width: fit-content;
+      max-width: min(420px, 100%);
+      margin: 0 auto;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .drop-cover-frame img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 3px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .drop-cover-rim {
+      position: absolute;
+      inset: -5px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    .drop-cover-inner {
+      position: relative;
+    }
+
+    /* ——— Bio Mozarf ——— */
+    .mozarf-bio {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg);
+    }
+
+    .mozarf-bio h2 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      margin: 0 0 0.5rem;
+      letter-spacing: 0.06em;
+    }
+
+    .mozarf-bio h2 span {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .mozarf-bio-grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .mozarf-bio-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .mozarf-bio p {
+      margin: 0 0 1rem;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .mozarf-bio p:last-child {
+      margin-bottom: 0;
+    }
+
+    .mozarf-bio strong {
+      color: var(--ink);
+    }
+
+    .mozarf-bio .highlight {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ——— Hero ——— */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: end;
+      }
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3.2rem, 10vw, 5.5rem);
+      line-height: 0.95;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      text-shadow: 0 0 40px rgba(232, 255, 74, 0.35);
+    }
+
+    .hero-lead {
+      margin: 0.75rem 0 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--muted);
+      max-width: 36ch;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .stat {
+      border-left: 3px solid var(--accent);
+      padding-left: 0.75rem;
+    }
+
+    .stat b {
+      display: block;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .stat span {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #1f1f28 0%, #0c0c0e 50%, #2a2418 100%);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 70% 20%, rgba(232, 255, 74, 0.08), transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero-card p {
+      margin: 0;
+      position: relative;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-card .big {
+      position: relative;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 3rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-top: 0.35rem;
+    }
+
+    /* ——— Filters ——— */
+    .filters {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      background: var(--bg);
+    }
+
+    .filters-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      width: 100%;
+      margin-bottom: 0.15rem;
+    }
+
+    @media (min-width: 640px) {
+      .filters-label {
+        width: auto;
+        margin-right: 0.5rem;
+        margin-bottom: 0;
+      }
+    }
+
+    .chip {
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .chip:hover {
+      color: var(--ink);
+      border-color: var(--muted);
+    }
+
+    .chip.is-on {
+      background: var(--accent);
+      color: #0c0c0e;
+      border-color: var(--accent);
+    }
+
+    /* ——— Grid ——— */
+    .main {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem 3rem;
+      background: var(--bg);
+    }
+
+    .section-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin: 0 0 1rem;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--line), transparent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-dim);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(232, 255, 74, 0.15);
+    }
+
+    .card-art {
+      aspect-ratio: 1;
+      position: relative;
+      background: var(--grad, #333);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-art--photo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.65) 100%);
+      pointer-events: none;
+    }
+
+    .card-play {
+      position: absolute;
+      bottom: 0.65rem;
+      right: 0.65rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0c0c0e;
+      border: none;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      transition: transform 0.15s ease;
+    }
+
+    .card-play:hover {
+      transform: scale(1.08);
+    }
+
+    .card-type {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.65);
+      color: var(--accent);
+    }
+
+    .card-body {
+      padding: 0.85rem 0.9rem 1rem;
+    }
+
+    .card-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.05;
+      margin: 0 0 0.2rem;
+      font-weight: 400;
+      color: var(--ink);
+    }
+
+    .card-artist {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      background: var(--bg-elevated);
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+
+    .tag.hot {
+      color: var(--hot);
+      border-color: rgba(255, 61, 92, 0.4);
+    }
+
+    .card-price {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .card-price small {
+      font-family: "Schibsted Grotesk", Roboto, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      vertical-align: super;
+    }
+
+    /* ——— Detail view ——— */
+    .view {
+      display: none;
+    }
+
+    .view.is-active {
+      display: block;
+    }
+
+    .detail-back {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 0;
+    }
+
+    .detail-back button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .detail-back button:hover {
+      color: var(--accent);
+    }
+
+    .detail {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 3rem;
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .detail {
+        grid-template-columns: minmax(240px, 380px) 1fr;
+        align-items: start;
+      }
+    }
+
+    .detail-art {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      background: var(--grad, #333);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .detail-type {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+
+    .detail h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
+      line-height: 0.95;
+      margin: 0 0 0.35rem;
+      font-weight: 400;
+    }
+
+    .detail-artist {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .detail-artist strong {
+      color: var(--ink);
+    }
+
+    .detail-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin: 0 0 1.25rem;
+      max-width: 52ch;
+    }
+
+    .detail-buy {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .detail-price {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.75rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .detail-license {
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 0.75rem 1rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      max-width: 100%;
+    }
+
+    .detail-license strong {
+      color: var(--accent);
+    }
+
+    .tracklist {
+      margin-top: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .tracklist h3 {
+      margin: 0;
+      padding: 0.65rem 1rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .track:last-child {
+      border-bottom: none;
+    }
+
+    .track:hover {
+      background: var(--bg-elevated);
+    }
+
+    .track-play {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+    }
+
+    .track-play:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .track-time {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* ——— Fiche release type Bandcamp ——— */
+    .bc-release {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 3rem;
+      display: block;
+    }
+
+    .bc-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (min-width: 900px) {
+      .bc-grid {
+        grid-template-columns: minmax(260px, 320px) 1fr;
+      }
+    }
+
+    .bc-side-art {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      background: var(--grad, #333);
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .bc-side-art--img {
+      padding: 0;
+      background: #0a0a0a;
+    }
+
+    .bc-side-art--img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    .bc-side-panel {
+      margin-top: 1.25rem;
+      padding: 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    .bc-side-panel .detail-price {
+      font-size: 2.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .bc-price-hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+      line-height: 1.4;
+    }
+
+    .bc-side-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .bc-side-actions .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .bc-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 1rem 0;
+    }
+
+    .bc-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .bc-share span {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      width: 100%;
+      margin-bottom: 0.15rem;
+    }
+
+    .btn-micro {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.72rem;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-micro:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .bc-formats {
+      margin: 0.85rem 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .bc-formats li {
+      padding: 0.2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bc-formats li:last-child {
+      border-bottom: none;
+    }
+
+    .bc-meta-grid {
+      margin-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .bc-meta-grid dt {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.5rem;
+      color: var(--ink);
+    }
+
+    .bc-meta-grid dd {
+      margin: 0.15rem 0 0;
+    }
+
+    .bc-fans {
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .bc-body h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 0.95;
+      margin: 0 0 0.35rem;
+      font-weight: 400;
+    }
+
+    .bc-lead {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+      max-width: 62ch;
+      line-height: 1.55;
+    }
+
+    .bc-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .tracklist-bc {
+      margin-top: 0.5rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .tracklist-bc-top {
+      padding: 0.75rem 1rem;
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tracklist-bc-top h3 {
+      margin: 0;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .tracklist-bc-top p {
+      margin: 0.25rem 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .track-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 0.75rem;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .track-row:last-child {
+      border-bottom: none;
+    }
+
+    .track-row:hover {
+      background: var(--bg-elevated);
+    }
+
+    .track-row-main {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-row .track-name {
+      flex: 1;
+      min-width: 0;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .track-row .track-time {
+      flex-shrink: 0;
+    }
+
+    .track-row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      width: 100%;
+    }
+
+    @media (min-width: 720px) {
+      .track-row-actions {
+        width: auto;
+        flex: 0 0 auto;
+        max-width: 340px;
+        justify-content: flex-end;
+      }
+    }
+
+    .btn-track-buy {
+      padding: 0.4rem 0.65rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .btn-track-buy:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-track-lic {
+      padding: 0.4rem 0.65rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-radius: 4px;
+      border: 1px solid rgba(232, 255, 74, 0.35);
+      background: rgba(232, 255, 74, 0.08);
+      color: var(--accent);
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+
+    .btn-track-lic:hover {
+      background: rgba(232, 255, 74, 0.18);
+    }
+
+    .bc-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .bc-section h4 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0 0 0.65rem;
+      letter-spacing: 0.03em;
+    }
+
+    .bc-section p,
+    .bc-section .bc-credits-pre {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 65ch;
+    }
+
+    .bc-credits-pre {
+      font-family: inherit;
+      white-space: pre-wrap;
+    }
+
+    .bc-more-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .bc-more-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+      cursor: pointer;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .bc-more-card:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+
+    .bc-more-art {
+      aspect-ratio: 1;
+      background: var(--g);
+    }
+
+    .bc-more-card p {
+      padding: 0.5rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .card-tracks-count {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.25rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1.25rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ——— Lecteur préécoute ——— */
+    .audio-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 45;
+      padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom, 0));
+      background: rgba(12, 12, 14, 0.96);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .audio-dock-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .audio-dock-play {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .audio-dock-play:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .audio-dock-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .audio-dock-title {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .audio-dock-time {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .audio-dock-seek {
+      width: 100%;
+      max-width: 100%;
+      flex: 1 1 100%;
+      height: 6px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .track-play.is-playing,
+    .card-play.is-playing,
+    .drop-preview-play.is-playing {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(232, 255, 74, 0.1);
+    }
+
+    body.has-audio-dock {
+      padding-bottom: 5.5rem;
+    }
+
+    #buckcamp-audio {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ——— Auth / Connexion ——— */
+    .auth-page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 3rem;
+    }
+
+    .auth-back {
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-back button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .auth-back button:hover {
+      color: var(--accent);
+    }
+
+    .auth-head {
+      margin-bottom: 1.75rem;
+    }
+
+    .auth-head h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1;
+      margin: 0 0 0.35rem;
+    }
+
+    .auth-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 48ch;
+    }
+
+    .auth-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (min-width: 840px) {
+      .auth-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .auth-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.35rem 1.35rem 1.5rem;
+    }
+
+    .auth-panel h2 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.65rem;
+      font-weight: 400;
+      margin: 0 0 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .field {
+      margin-bottom: 1rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--bg-elevated);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.95rem;
+    }
+
+    .field input:focus {
+      outline: none;
+      border-color: var(--accent-dim);
+      box-shadow: 0 0 0 3px rgba(232, 255, 74, 0.1);
+    }
+
+    .auth-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: -0.35rem 0 1rem;
+    }
+
+    .auth-success {
+      display: none;
+      padding: 1rem;
+      border-radius: 8px;
+      background: rgba(232, 255, 74, 0.1);
+      border: 1px solid rgba(232, 255, 74, 0.35);
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .auth-success.is-visible {
+      display: block;
+    }
+
+    .auth-success strong {
+      color: var(--accent);
+    }
+
+    .auth-loading {
+      display: none;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .auth-loading.is-visible {
+      display: block;
+    }
+
+    .auth-form-disabled .field input,
+    .auth-form-disabled .btn[type="submit"] {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .steps-panel h2 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.65rem;
+      font-weight: 400;
+      margin: 0 0 0.35rem;
+    }
+
+    .steps-lead {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0 0 1.25rem;
+      line-height: 1.5;
+    }
+
+    .steps-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps-list li {
+      counter-increment: step;
+      position: relative;
+      padding: 0.85rem 0 0.85rem 2.75rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .steps-list li:last-child {
+      border-bottom: none;
+    }
+
+    .steps-list li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+
+    .steps-list li.is-next::before {
+      background: var(--accent);
+      color: #0c0c0e;
+      border-color: var(--accent);
+    }
+
+    .steps-list li span {
+      display: block;
+      font-weight: 500;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      line-height: 1.4;
+    }
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(232, 255, 74, 0.12);
+      border: 1px solid rgba(232, 255, 74, 0.25);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .user-pill:hover {
+      border-color: rgba(232, 255, 74, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a href="#" class="brand" id="logo-home" aria-label="Accueil BUCKCAMP">BUCK<span>CAMP</span></a>
+      <div class="search-wrap">
+        <input type="search" class="search" placeholder="Beats, albums, producteurs…" id="search-input" />
+      </div>
+      <div class="top-actions">
+        <button type="button" class="btn btn-ghost">Vendre</button>
+        <span id="user-pill" class="user-pill hidden" title="Session démo"></span>
+        <button type="button" class="btn btn-ghost" id="btn-connexion">Connexion</button>
+        <button type="button" class="btn btn-ghost hidden" id="btn-logout">Déconnexion</button>
+        <button type="button" class="btn btn-accent">Panier · 0</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="view-home" class="view is-active">
+    <div id="drop-page-bg-root" class="drop-page-bg-root hidden" aria-hidden="true">
+      <div id="drop-parallax-bg" class="drop-parallax-bg"></div>
+      <div id="drop-parallax-ground" class="drop-parallax-ground"></div>
+      <div class="drop-parallax-scrim"></div>
+    </div>
+
+    <section id="drop-hero" class="drop-hero hidden" aria-label="Mise en avant sortie">
+      <div class="drop-hero-inner">
+        <div class="drop-copy">
+          <span class="drop-badge"><span class="drop-badge-dot" aria-hidden="true"></span> Drop — fenêtre limitée</span>
+          <p class="drop-artist-line">MOZARFMUZIK</p>
+          <h2 class="drop-title">Gloria Imperi</h2>
+          <p class="drop-tagline">
+            Nouvelle release en avant-première sur BUCKCAMP. Pochette réelle, achat &amp; fiche complète — même logique
+            qu’après la fenêtre drop.
+          </p>
+          <div class="drop-cta-row">
+            <button type="button" class="btn btn-hot" id="drop-btn-buy">Acheter l’album</button>
+            <button type="button" class="btn btn-outline-light" id="drop-btn-preview">Ouvrir la fiche &amp; preview</button>
+          </div>
+          <div class="drop-preview-strip">
+            <button type="button" class="drop-preview-play" id="drop-btn-play-fake" aria-label="Preview (démo)">▶</button>
+            <div class="drop-wave" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="drop-preview-label">Preview · audio à brancher</p>
+          </div>
+        </div>
+        <div class="drop-cover-wrap" id="drop-cover-wrap">
+          <div class="drop-cover-frame" id="drop-cover-frame">
+            <div class="drop-cover-inner">
+              <span class="drop-cover-rim" aria-hidden="true"></span>
+              <img
+                src="assets/gloria-imperi-cover.png"
+                width="800"
+                height="800"
+                alt="Pochette Gloria Imperi — MOZARFMUZIK"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero" id="standard-hero">
+      <div>
+        <h1 class="font-display">SONS <em>KRUMP</em><br />PRIX JUSTE<br />92% AUX BEATMAKERS</h1>
+        <p class="hero-lead">
+          Fiches complètes façon Bandcamp : pochette, formats, partage, crédits, liste de morceaux avec
+          <strong>Acheter</strong> ou <strong>Licence</strong> par piste + achat album.
+        </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <b id="stat-item-count">—</b>
+            <span>items démo</span>
+          </div>
+          <div class="stat">
+            <b>15€</b>
+            <span>exemple</span>
+          </div>
+          <div class="stat">
+            <b>140</b>
+            <span>BPM vibe</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <p>En piste cette semaine</p>
+        <div class="big">BUCKCAMP</div>
+        <p style="margin-top: 1rem; text-transform: none; letter-spacing: 0; font-weight: 500; line-height: 1.5">
+          Albums démo : 12, 15 et 14 titres. Singles : 1 piste, mêmes boutons. Tout est statique — pas de backend ni
+          audio réel.
+        </p>
+      </div>
+    </section>
+
+    <section class="mozarf-bio" id="mozarf-bio">
+      <h2 class="font-display">WHO IS <span>MOZARF</span></h2>
+      <p class="highlight">MOZARFMUZIK · compositeur · Paris</p>
+      <div class="mozarf-bio-grid">
+        <div>
+          <p>
+            <strong>Morf</strong>, connu sous <strong>Mozarf</strong> / <strong>MOZARFMUZIK</strong>, est un compositeur
+            parisien dont la ligne part du <strong>krump</strong> : danseur chez <strong>Outsiderz</strong> (Ermont), il
+            compose d’abord pour les sessions du crew, puis se tourne entièrement vers la musique. Ses morceaux circulent
+            vite à l’international via battles et événements.
+          </p>
+          <p>
+            Dès <strong>2013</strong>, il travaille avec <strong>Grichka</strong> (<em>Krump Tower</em>, capté par
+            <strong>Yakfilms</strong>), devient DJ officiel de l’<strong>International Illest Battle</strong> France et
+            empile les titres en beatmaking krump sur la planète. La suite élargit le spectre :
+            <strong>Clément Cogitore</strong> (<em>Les Indes Galantes</em>), <strong>Marvin Gofin</strong> (<em>I Art</em>,
+            co-prod <strong>Dr. Dre</strong>), la série <strong>TF1 <em>Fugueuse</em></strong>, le documentaire
+            <strong>Romain Cieutat</strong> <em>KRUMP GET OFF</em> (<strong>Apple TV</strong>), sans
+            compter des collaborations urbaines (<strong>Niska</strong>, <strong>Gradur</strong>, <strong>Fresh</strong>,
+            <strong>Sirine Ventura</strong>) et des intros live pour <strong>Benjamin Epps</strong>.
+          </p>
+        </div>
+        <div>
+          <p>
+            Figure incontournable de la scène, il DJ sur les plus grosses scènes (dont à l’étranger, Inde, Russie) et
+            creuse le <strong>scoring</strong> : <em>Birth</em> avec Grichka, <em>BLIND</em> avec la chorégraphe
+            <strong>Dricks</strong>. Aujourd’hui il poursuit une veine <strong>cinématographique</strong> — son art vise à
+            faire passer des émotions fortes, au-delà des frontières, avec une ouverture qui nourrit chaque nouvelle
+            production.
+          </p>
+          <p style="font-size: 0.82rem; opacity: 0.85">
+            Texte de présentation synthétisé pour la maquette BUCKCAMP ; la fiche album <em>Gloria Imperi</em> reprend le
+            flux d’achat type Bandcamp (pistes, licences, formats).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="filters">
+      <span class="filters-label">Filtrer</span>
+      <button type="button" class="chip is-on" data-filter="all">Tout</button>
+      <button type="button" class="chip" data-filter="single">Singles</button>
+      <button type="button" class="chip" data-filter="album">Albums</button>
+    </div>
+
+    <div class="main">
+      <h2 class="section-title font-display">Catalogue démo</h2>
+      <div class="grid" id="catalog-grid"></div>
+    </div>
+  </div>
+
+  <div id="view-detail" class="view">
+    <div class="detail-back">
+      <button type="button" id="btn-back">← Retour au catalogue</button>
+    </div>
+    <article class="bc-release" id="detail-root"></article>
+  </div>
+
+  <div id="view-login" class="view">
+    <div class="auth-page">
+      <div class="auth-back">
+        <button type="button" id="btn-back-login">← Retour</button>
+      </div>
+      <header class="auth-head">
+        <h1 class="font-display">CONNEXION</h1>
+        <p>
+          Simulation locale : aucun compte réel. Remplis le formulaire pour voir le message de succès et les étapes du
+          produit final.
+        </p>
+      </header>
+
+      <div class="auth-grid">
+        <div class="auth-panel">
+          <h2>Se connecter</h2>
+          <p class="auth-hint">N’importe quel email / mot de passe suffit pour la démo.</p>
+          <div id="login-loading" class="auth-loading" aria-live="polite">Connexion en cours…</div>
+          <div id="login-success" class="auth-success" role="status">
+            <strong>Connecté (démo).</strong> La suite côté BUCKCAMP : suis les étapes à droite — on commence par la
+            vérification du compte.
+          </div>
+          <form id="login-form" novalidate>
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" name="email" autocomplete="username" placeholder="toi@email.com" required />
+            </div>
+            <div class="field">
+              <label for="login-password">Mot de passe</label>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                autocomplete="current-password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 0.25rem">Entrer</button>
+          </form>
+          <p style="margin: 1rem 0 0; font-size: 0.85rem; color: var(--muted)">
+            <a href="#" id="link-signup">Créer un compte</a> — maquette : ouvre les mêmes étapes, inscription à brancher
+            plus tard.
+          </p>
+        </div>
+
+        <div class="auth-panel steps-panel">
+          <h2>Après connexion</h2>
+          <p class="steps-lead">Ce qui suivra dans le vrai produit BUCKCAMP (ordre indicatif).</p>
+          <ol class="steps-list" id="steps-list">
+            <li class="is-next" data-step="1">
+              Vérification du compte
+              <span>Email de confirmation ou OTP, récupération mot de passe.</span>
+            </li>
+            <li data-step="2">
+              Profil &amp; statut vendeur
+              <span>Infos publiques, éventuellement vérification identité / Stripe Connect pour encaisser.</span>
+            </li>
+            <li data-step="3">
+              Premier upload
+              <span>Fichiers audio, pochette, type single ou album, prix, texte de licence.</span>
+            </li>
+            <li data-step="4">
+              Mise en catalogue
+              <span>Publication, tags BPM / genre, préécoute, visibilité.</span>
+            </li>
+            <li data-step="5">
+              Vente &amp; reversement
+              <span>Paiement (ex. Stripe), historique d’achats, 92&nbsp;% au compositeur selon tes règles.</span>
+            </li>
+            <li data-step="6">
+              App &amp; écoute hors ligne
+              <span>Connexion au même compte, téléchargements autorisés, lecteur local.</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>BUCKCAMP · maquette locale · pas de paiement réel</footer>
+
+  <div id="audio-dock" class="audio-dock hidden" aria-live="polite">
+    <div class="audio-dock-inner">
+      <button type="button" class="audio-dock-play" id="audio-dock-play" aria-label="Pause / lecture">❚❚</button>
+      <div class="audio-dock-meta">
+        <span class="audio-dock-title" id="audio-dock-title">Préécoute</span>
+        <span class="audio-dock-time" id="audio-dock-time">0:00 / 0:00</span>
+      </div>
+      <input type="range" class="audio-dock-seek" id="audio-dock-seek" min="0" max="1000" value="0" aria-label="Position dans la piste" />
+    </div>
+    <audio id="buckcamp-audio" preload="metadata"></audio>
+  </div>
+
+  <script>
+    function tr(idx, title, timeM, priceTrack, priceLic) {
+      return { n: (idx < 10 ? "0" : "") + idx + " — " + title, t: timeM, tb: priceTrack, lb: priceLic };
+    }
+
+    function euro(n) {
+      return n.toFixed(2).replace(".", ",") + "\u00a0€";
+    }
+
+    function audioUrl(basename) {
+      if (!basename) return "";
+      return "audio/" + encodeURIComponent(basename);
+    }
+
+    function getItemPreviewUrl(item) {
+      if (!item) return "";
+      if (item.previewFile) return audioUrl(item.previewFile);
+      var ts = item.tracks || [];
+      for (var i = 0; i < ts.length; i++) {
+        if (ts[i].audioFile) return audioUrl(ts[i].audioFile);
+      }
+      return "";
+    }
+
+    function getItemPreviewLabel(item) {
+      if (!item) return "";
+      return item.artist + " — " + item.title;
+    }
+
+    function fmtAudioTime(sec) {
+      if (!isFinite(sec) || sec < 0) return "0:00";
+      var m = Math.floor(sec / 60);
+      var s = Math.floor(sec % 60);
+      return m + ":" + (s < 10 ? "0" : "") + s;
+    }
+
+    function initBuckcampAudio() {
+      var a = document.getElementById("buckcamp-audio");
+      var dock = document.getElementById("audio-dock");
+      var dockPlay = document.getElementById("audio-dock-play");
+      var dockTitle = document.getElementById("audio-dock-title");
+      var dockTime = document.getElementById("audio-dock-time");
+      var dockSeek = document.getElementById("audio-dock-seek");
+      if (!a || !dock) return;
+
+      function resetInlineButtons() {
+        document
+          .querySelectorAll(".track-play.is-playing, .card-play.is-playing, .drop-preview-play.is-playing")
+          .forEach(function (b) {
+            b.classList.remove("is-playing");
+            b.textContent = "▶";
+          });
+      }
+
+      function updateDockPlayState() {
+        if (!dockPlay) return;
+        var playing = Boolean(a.src) && !a.paused && !a.ended;
+        dockPlay.textContent = playing ? "❚❚" : "▶";
+        dockPlay.setAttribute("aria-label", playing ? "Pause" : "Lecture");
+      }
+
+      function showDock(v) {
+        dock.classList.toggle("hidden", !v);
+        document.body.classList.toggle("has-audio-dock", v);
+      }
+
+      function playPreview(url, label, btn) {
+        if (!url) return;
+        var loaded = a.dataset.loadedUrl === url;
+        if (loaded && !a.paused) {
+          a.pause();
+          resetInlineButtons();
+          updateDockPlayState();
+          return;
+        }
+        if (loaded && a.paused) {
+          var pr = a.play();
+          if (pr && pr.catch) pr.catch(function () {});
+          if (btn) {
+            btn.classList.add("is-playing");
+            btn.textContent = "❚❚";
+          }
+          updateDockPlayState();
+          return;
+        }
+        resetInlineButtons();
+        a.src = url;
+        a.dataset.loadedUrl = url;
+        var pg = a.play();
+        if (pg && pg.catch) {
+          pg.catch(function () {
+            alert(
+              "Lecture impossible. Si tu ouvres index.html en file://, certains navigateurs bloquent l’audio : sers la page avec un petit serveur (ex. cd platform-preview && python3 -m http.server 8080)."
+            );
+          });
+        }
+        if (btn) {
+          btn.classList.add("is-playing");
+          btn.textContent = "❚❚";
+        }
+        if (dockTitle) dockTitle.textContent = label || "Préécoute";
+        showDock(true);
+        updateDockPlayState();
+      }
+
+      window.buckcampPlayPreview = playPreview;
+
+      a.addEventListener("timeupdate", function () {
+        if (!dockTime || !dockSeek) return;
+        var dur = a.duration;
+        var cur = a.currentTime;
+        dockTime.textContent = fmtAudioTime(cur) + " / " + fmtAudioTime(isFinite(dur) ? dur : 0);
+        if (isFinite(dur) && dur > 0) {
+          dockSeek.value = String(Math.min(1000, Math.floor((cur / dur) * 1000)));
+        }
+      });
+
+      a.addEventListener("loadedmetadata", function () {
+        updateDockPlayState();
+        if (!dockTime) return;
+        var dur = a.duration;
+        var cur = a.currentTime;
+        dockTime.textContent = fmtAudioTime(cur) + " / " + fmtAudioTime(isFinite(dur) ? dur : 0);
+      });
+
+      a.addEventListener("ended", function () {
+        resetInlineButtons();
+        updateDockPlayState();
+        if (dockSeek) dockSeek.value = "0";
+      });
+
+      a.addEventListener("pause", function () {
+        resetInlineButtons();
+        updateDockPlayState();
+      });
+
+      a.addEventListener("play", function () {
+        updateDockPlayState();
+      });
+
+      if (dockSeek) {
+        dockSeek.addEventListener("input", function () {
+          var dur = a.duration;
+          if (!isFinite(dur) || dur <= 0) return;
+          var v = parseInt(dockSeek.value, 10) || 0;
+          a.currentTime = (v / 1000) * dur;
+        });
+      }
+
+      if (dockPlay) {
+        dockPlay.addEventListener("click", function () {
+          if (!a.src) return;
+          if (a.paused) {
+            var px = a.play();
+            if (px && px.catch) px.catch(function () {});
+          } else {
+            a.pause();
+          }
+        });
+      }
+    }
+
+    function buildTracks(names, times, tb, lb) {
+      return names.map(function (name, i) {
+        return tr(i + 1, name, times[i] || "2:30", tb, lb);
+      });
+    }
+
+    var A1_NAMES = [
+      "Warm up 140",
+      "Stomp drill",
+      "Circle groove A",
+      "Circle groove B",
+      "Elbow room",
+      "Battle call",
+      "Bridge tension",
+      "Floor echo",
+      "Speed kick",
+      "Silent break",
+      "Final round",
+      "Outro sweat",
+    ];
+    var A1_TIMES = ["2:18", "2:34", "2:42", "2:31", "2:08", "2:55", "2:12", "2:47", "2:22", "3:01", "2:38", "2:51"];
+
+    var A2_NAMES = [
+      "Title round",
+      "Counter round",
+      "Elbow narrative",
+      "Floor work",
+      "Speed change",
+      "Silent threat",
+      "Chorus battle",
+      "Final stance",
+      "Victory lap",
+      "Blood anthem",
+      "Second wind",
+      "King stance",
+      "Underdog rise",
+      "Champion cut",
+      "Glory outro",
+    ];
+    var A2_TIMES = ["2:33", "2:18", "2:55", "2:40", "2:22", "3:08", "2:11", "2:49", "2:27", "3:02", "2:15", "2:51", "2:36", "2:44", "3:18"];
+
+    var A3_NAMES = [
+      "Blue hour",
+      "Lobby",
+      "Warm bodies",
+      "First circle",
+      "Elbow suite",
+      "Bridge smoke",
+      "Battle tide",
+      "Silent room",
+      "Peak sweat",
+      "Cooldown",
+      "Last stance",
+      "Street echo",
+      "Dawn cut",
+      "Nightfall",
+    ];
+    var A3_TIMES = ["2:12", "2:45", "2:28", "2:51", "2:19", "3:05", "2:37", "2:08", "3:22", "2:33", "2:47", "2:14", "2:59", "2:41"];
+
+    var GLORIA_NAMES = [
+      "Imperi intro",
+      "Outsiderz rise",
+      "Ermont fog",
+      "Tower pulse",
+      "Illest anthem",
+      "Indes shade",
+      "Birth echo",
+      "Fugue chase",
+      "Krump TV cut",
+      "Epps gate",
+      "Urban bridge",
+      "Gloria fin",
+    ];
+    var GLORIA_TIMES = ["2:22", "2:48", "2:15", "2:51", "2:33", "3:02", "2:27", "2:19", "2:44", "2:36", "2:58", "3:11"];
+
+    var MAELSTROM_FILES = [
+      "MOZARF - MAELSTRÖM - 01 SUPER VILAIN PARTY.mp3",
+      "MOZARF - MAELSTRÖM - 02 MARCH SYMPHONYXXX.mp3",
+      "MOZARF - MAELSTRÖM - 03 DECEPTION MUZIK.mp3",
+      "MOZARF - MAELSTRÖM - 04 HYDRA GANG.mp3",
+      "MOZARF - MAELSTRÖM - 05 FOCUS ON YOUR TARGET.mp3",
+      "MOZARF - MAELSTRÖM - 06 ALPHA ZONA.mp3",
+      "MOZARF - MAELSTRÖM - 07 HEALTH AND HOPE.mp3",
+      "MOZARF - MAELSTRÖM - 08 CURIOUS THING.mp3",
+      "MOZARF - MAELSTRÖM - 09 MEDIANT CYBER.mp3",
+      "MOZARF - MAELSTRÖM - 10 PUSH.mp3",
+    ];
+
+    var MAELSTROM_TITLES = [
+      "SUPER VILAIN PARTY",
+      "MARCH SYMPHONYXXX",
+      "DECEPTION MUZIK",
+      "HYDRA GANG",
+      "FOCUS ON YOUR TARGET",
+      "ALPHA ZONA",
+      "HEALTH AND HOPE",
+      "CURIOUS THING",
+      "MEDIANT CYBER",
+      "PUSH",
+    ];
+
+    function buildMaelstromTracks() {
+      return MAELSTROM_FILES.map(function (f, i) {
+        var o = tr(i + 1, MAELSTROM_TITLES[i], "—", 3, 35);
+        o.audioFile = f;
+        return o;
+      });
+    }
+
+    /** Fenêtre drop homepage : mets à jour activeUntil (ISO) + albumId à chaque sortie (~7 jours). */
+    var DROP_CAMPAIGN = {
+      activeUntil: "2026-04-15T23:59:59",
+      albumId: "gloria-imperi",
+    };
+
+    var CATALOG = [
+      {
+        id: "gloria-imperi",
+        type: "album",
+        title: "Gloria Imperi",
+        artist: "MOZARFMUZIK",
+        price: 22,
+        defaultTrackBuy: 2.75,
+        defaultLicenseBuy: 32,
+        bpm: "138–148",
+        key: "—",
+        tags: ["album", "krump", "cinéma"],
+        grad: "linear-gradient(160deg, #1a1a1a 0%, #3a3a3a 50%, #0c0c0e 100%)",
+        coverImage: "assets/gloria-imperi-cover.png",
+        desc: "Album maquette BUCKCAMP — esthétique monochrome, tension cinématographique et énergie krump. Pochette officielle intégrée.",
+        license: "Album numérique + licences par piste. 92 % au beatmaker après frais (objectif plateforme).",
+        released: "8 avril 2026",
+        location: "Paris, France",
+        supporters: 428,
+        approxMinutes: 33,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC", "WAV"],
+        credits:
+          "MOZARFMUZIK — Gloria Imperi\nProduction & direction artistique : Mozarf\nBUCKCAMP preview — artwork fourni par l’artiste",
+        about:
+          "Suite à la fenêtre « drop » sur l’accueil, cette fiche concentre tout le parcours d’achat type Bandcamp : release complète, piste par piste, licences, formats et partage.",
+        tracks: buildTracks(GLORIA_NAMES, GLORIA_TIMES, 2.75, 32),
+      },
+      {
+        id: "maelstrom",
+        type: "album",
+        title: "MAELSTROM",
+        artist: "MOZARFMUZIK",
+        price: 28,
+        defaultTrackBuy: 3,
+        defaultLicenseBuy: 35,
+        bpm: "var.",
+        key: "—",
+        tags: ["album", "krump"],
+        grad: "linear-gradient(145deg, #1a0a12 0%, #4a2a30 50%, #0c0c0e 100%)",
+        desc: "10 titres — fichiers MP3 dans le dossier audio/. Préécoute réelle sur chaque piste et depuis la grille.",
+        license: "Maquette BUCKCAMP — licences commerciales à définir.",
+        released: "2025",
+        location: "Paris, France",
+        supporters: 0,
+        approxMinutes: 38,
+        formats: ["MP3 320 kbps", "Sans DRM"],
+        credits: "MOZARFMUZIK — MAELSTROM\nAudio local : platform-preview/audio/",
+        about: "Cet album est relié aux fichiers MP3 que tu as ajoutés. Tu peux remplacer les noms dans le script si tu changes de pack.",
+        previewFile: MAELSTROM_FILES[0],
+        tracks: buildMaelstromTracks(),
+      },
+      {
+        id: "s1",
+        type: "single",
+        title: "IRON STOMP",
+        artist: "CYPH K",
+        price: 15,
+        licensePrice: 48,
+        bpm: 140,
+        key: "Fm",
+        tags: ["krump", "session"],
+        grad: "linear-gradient(145deg, #1a0a0a 0%, #ff3d5c 40%, #2a1810 100%)",
+        desc: "Kick lourd, silence tactique, drop pour battle. Single avec achat fichier + licence pro séparée.",
+        license: "Achat standard = MP3 + WAV usage session / non commercial. Licence séparée = clip monétisé, pub, redistribution selon contrat.",
+        released: "12 mars 2025",
+        location: "Paris, France",
+        supporters: 184,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC", "WAV"],
+        credits:
+          "Prod & mix : CYPH K\nMaster : maquette\nBPM : 140 · tonalité : Fm\nTous droits réservés — BUCKCAMP démo",
+        about:
+          "Pensé pour les rounds krump : respiration, impact, fin ouverte. La préécoute est factice sur cette maquette ; en prod chaque piste aura son flux audio.",
+        tracks: [tr(1, "IRON STOMP", "2:47", 15, 48)],
+      },
+      {
+        id: "s2",
+        type: "single",
+        title: "GLITCH KNEE",
+        artist: "RAW SECTION",
+        price: 12,
+        licensePrice: 42,
+        bpm: 145,
+        key: "Dm",
+        tags: ["krump", "expé"],
+        grad: "linear-gradient(160deg, #0e1a12 0%, #e8ff4a 35%, #0c0c0e 100%)",
+        desc: "Texture glitch + gros 808. Deux boutons par ligne : fichier seul vs licence commerciale.",
+        license: "Fichier = usage perso / battle. Licence = droits étendus (à définir avec juriste).",
+        released: "2 avril 2025",
+        location: "Lyon, France",
+        supporters: 96,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC"],
+        credits: "RAW SECTION — expérimental session kit",
+        about: "Single orienté texture ; la fiche reprend la logique Bandcamp : pochette, crédits, partage, liste de morceaux avec actions.",
+        tracks: [tr(1, "GLITCH KNEE", "3:12", 12, 42)],
+      },
+      {
+        id: "s3",
+        type: "single",
+        title: "HALL OF SWEAT",
+        artist: "MOZARF",
+        price: 18,
+        licensePrice: 55,
+        bpm: 138,
+        key: "Gm",
+        tags: ["krump", "anthem"],
+        grad: "linear-gradient(135deg, #121820 0%, #4d8f82 50%, #ffc233 100%)",
+        desc: "Ambiance salle, montée progressive. Même structure d’achat que les albums : piste à la carte.",
+        license: "WAV + stems (fictif en maquette). Licence pro pour usages commerciaux.",
+        released: "28 févr. 2025",
+        location: "Bruxelles, Belgique",
+        supporters: 241,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC", "WAV"],
+        credits: "Mozarf — anthem live session energy",
+        about: "Exemple de single producteur avec métadonnées type Bandcamp et double CTA par piste.",
+        tracks: [tr(1, "HALL OF SWEAT", "2:58", 18, 55)],
+      },
+      {
+        id: "a1",
+        type: "album",
+        title: "SESSION DÉBUTANT VOL.1",
+        artist: "BEAT COLLECTIF",
+        price: 35,
+        defaultTrackBuy: 2.5,
+        defaultLicenseBuy: 22,
+        bpm: 140,
+        key: "—",
+        tags: ["pack", "débutant"],
+        grad: "linear-gradient(145deg, #2a1f08 0%, #ffc233 30%, #1a1510 100%)",
+        desc: "12 morceaux pour entrer dans le son krump : progressions, breaks, finales. Album complet ou achat à l’unité.",
+        license: "Album : licence bundle session. Par piste : achat fichier ou licence commerciale indépendante.",
+        released: "15 janv. 2025",
+        location: "France",
+        supporters: 512,
+        approxMinutes: 31,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC", "WAV (bundle album)"],
+        credits:
+          "Collectif BUCKCAMP démo\n12 titres · BPM centrés 140\nArtwork : placeholder dégradé\nRemerciements : toutes les sessions test.",
+        about:
+          "Volume débutant : boucles stables, transitions lisibles, idéal pour apprendre les structures de round. Cette maquette montre une fiche complète façon Bandcamp : colonne d’achat, formats, partage, crédits, et piste par piste.",
+        tracks: buildTracks(A1_NAMES, A1_TIMES, 2.5, 22),
+      },
+      {
+        id: "a2",
+        type: "album",
+        title: "EXPERT — CHAMPIONSHIP KIT",
+        artist: "CYPH K",
+        price: 55,
+        defaultTrackBuy: 3.5,
+        defaultLicenseBuy: 35,
+        bpm: "140–150",
+        key: "—",
+        tags: ["pack", "expert", "hot"],
+        grad: "linear-gradient(125deg, #0c0c0e 0%, #ff3d5c 25%, #2a1040 90%)",
+        desc: "15 morceaux, variations de BPM et de tension pour battles avancés. Prix piste / licence plus élevés.",
+        license: "Extended & broadcast (texte à valider juridiquement). 92 % reversés au vendeur cible BUCKCAMP.",
+        released: "3 avril 2025",
+        location: "Paris, France",
+        supporters: 1203,
+        approxMinutes: 48,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC", "WAV", "Stems (option fictive)"],
+        credits:
+          "CYPH K — Championship Kit\n15 titres · BPM 140–150\nConçu pour finales et showcases\nBUCKCAMP maquette UI",
+        about:
+          "Kit expert : plus de variations, silences agressifs, sections pour elbow et footwork. L’interface reprend l’esprit place de marché + la clarté d’une fiche album Bandcamp.",
+        tracks: buildTracks(A2_NAMES, A2_TIMES, 3.5, 35),
+      },
+      {
+        id: "s4",
+        type: "single",
+        title: "CONCRETE SOUL",
+        artist: "RAW SECTION",
+        price: 15,
+        licensePrice: 45,
+        bpm: 142,
+        key: "Am",
+        tags: ["krump", "minimal"],
+        grad: "linear-gradient(180deg, #1c1c1c 0%, #666 45%, #e8ff4a 100%)",
+        desc: "Minimal, gros espace pour le corps. Double achat sur la même ligne.",
+        license: "Lease standard (fictif) — détails au checkout réel.",
+        released: "20 mars 2025",
+        location: "Marseille, France",
+        supporters: 67,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC"],
+        credits: "RAW SECTION — minimal krump toolkit",
+        about: "Une seule piste, deux boutons : fichier ou licence.",
+        tracks: [tr(1, "CONCRETE SOUL", "3:05", 15, 45)],
+      },
+      {
+        id: "a3",
+        type: "album",
+        title: "NIGHT SESSIONS",
+        artist: "MOZARF",
+        price: 42,
+        defaultTrackBuy: 3,
+        defaultLicenseBuy: 26,
+        bpm: 144,
+        key: "—",
+        tags: ["album", "story"],
+        grad: "linear-gradient(220deg, #0a1628 0%, #4d8f82 40%, #0c0c0e 100%)",
+        desc: "14 morceaux, arc d’une soirée session jusqu’au matin. Narratif + achats granulaires.",
+        license: "Album bundle + licences par titre pour usages commerciaux ciblés.",
+        released: "8 avril 2025",
+        location: "Europe",
+        supporters: 389,
+        approxMinutes: 38,
+        formats: ["Sans DRM", "MP3 320 kbps", "FLAC", "WAV"],
+        credits:
+          "Mozarf — Night Sessions\n14 titres · histoire en une nuit de session\nBUCKCAMP preview",
+        about:
+          "De l’entrée salle au premier jour : progression nocturne. Chaque morceau est achetable seul avec sa propre licence.",
+        tracks: buildTracks(A3_NAMES, A3_TIMES, 3, 26),
+      },
+    ];
+
+    (function () {
+      var el = document.getElementById("stat-item-count");
+      if (el) el.textContent = String(CATALOG.length);
+    })();
+
+    function esc(s) {
+      var d = document.createElement("div");
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function renderCard(item) {
+      var typeLabel = item.type === "album" ? "Album" : "Single";
+      var tags = item.tags
+        .map(function (t) {
+          return '<span class="tag' + (t === "expert" || t === "hot" ? " hot" : "") + '">' + esc(t) + "</span>";
+        })
+        .join("");
+      var trackLine =
+        item.type === "album"
+          ? '<p class="card-tracks-count">' + item.tracks.length + " titres · achat à l’unité</p>"
+          : "";
+      var artClass = "card-art" + (item.coverImage ? " card-art--photo" : "");
+      var safeUrl = item.coverImage ? String(item.coverImage).replace(/[^a-zA-Z0-9\-_./]/g, "") : "";
+      var artStyle = item.coverImage
+        ? "background-color:#0a0a0a;background-image:linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.45)), url(" +
+          safeUrl +
+          ");background-size:contain;background-repeat:no-repeat;background-position:center;--grad:" +
+          item.grad
+        : "--grad:" + item.grad;
+      return (
+        '<article class="card" data-id="' +
+        esc(item.id) +
+        '">' +
+        '<div class="' +
+        artClass +
+        '" style="' +
+        artStyle +
+        '">' +
+        '<span class="card-type">' +
+        typeLabel +
+        "</span>" +
+        (function () {
+          var pv = getItemPreviewUrl(item);
+          var playAttrs =
+            pv !== ""
+              ? ' data-preview-url="' + pv + '" data-preview-label="' + esc(getItemPreviewLabel(item)) + '"'
+              : "";
+          return '<button type="button" class="card-play" aria-label="Préécouter"' + playAttrs + ">▶</button>";
+        })() +
+        "</div>" +
+        '<div class="card-body">' +
+        '<h3 class="card-title">' +
+        esc(item.title) +
+        "</h3>" +
+        '<p class="card-artist">' +
+        esc(item.artist) +
+        "</p>" +
+        trackLine +
+        '<div class="card-meta">' +
+        tags +
+        '<span class="tag">' +
+        esc(String(item.bpm)) +
+        " BPM</span>" +
+        "</div>" +
+        '<div class="card-price">' +
+        esc(String(item.price)) +
+        ",00 € <small>TTC</small></div>" +
+        "</div></article>"
+      );
+    }
+
+    function filterCatalog(filter) {
+      if (filter === "all") return CATALOG;
+      return CATALOG.filter(function (x) {
+        return x.type === filter;
+      });
+    }
+
+    function renderGrid(filter) {
+      var grid = document.getElementById("catalog-grid");
+      var items = filterCatalog(filter);
+      grid.innerHTML = items.map(renderCard).join("");
+      grid.querySelectorAll(".card").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+          var cp = e.target.closest(".card-play");
+          if (cp) {
+            e.stopPropagation();
+            var url = cp.getAttribute("data-preview-url");
+            if (url && window.buckcampPlayPreview) {
+              window.buckcampPlayPreview(url, cp.getAttribute("data-preview-label") || "", cp);
+            }
+            return;
+          }
+          openDetail(el.getAttribute("data-id"));
+        });
+      });
+    }
+
+    function trackPriceBuy(tr, item) {
+      if (tr.tb != null) return tr.tb;
+      if (item.defaultTrackBuy != null) return item.defaultTrackBuy;
+      return item.price;
+    }
+
+    function trackPriceLic(tr, item) {
+      if (tr.lb != null) return tr.lb;
+      if (item.defaultLicenseBuy != null) return item.defaultLicenseBuy;
+      return item.licensePrice != null ? item.licensePrice : 32;
+    }
+
+    function buildDetailHTML(item) {
+      var typeLabel = item.type === "album" ? "Album" : "Single";
+      var totalTracks = item.tracks.length;
+      var approx = item.approxMinutes ? " · ~" + item.approxMinutes + " min" : "";
+      var tracksHtml = item.tracks
+        .map(function (tr) {
+          var buyP = euro(trackPriceBuy(tr, item));
+          var licP = euro(trackPriceLic(tr, item));
+          var buyMsg = "Acheter la piste : " + tr.n + " (" + buyP + " TTC)";
+          var licMsg = "Acheter la licence : " + tr.n + " (" + licP + ") — contrat PDF en production.";
+          var au = tr.audioFile ? audioUrl(tr.audioFile) : "";
+          var audAttr =
+            au !== ""
+              ? ' data-preview-url="' + au + '" data-preview-label="' + esc(item.title + " — " + tr.n) + '"'
+              : "";
+          return (
+            '<div class="track-row">' +
+            '<div class="track-row-main">' +
+            '<button type="button" class="track-play" aria-label="Préécouter"' +
+            audAttr +
+            ">▶</button>" +
+            '<span class="track-name">' +
+            esc(tr.n) +
+            '</span><span class="track-time">' +
+            esc(tr.t) +
+            "</span></div>" +
+            '<div class="track-row-actions">' +
+            '<button type="button" class="btn-track-buy" data-demo-buy="' +
+            esc(buyMsg) +
+            '">Acheter · ' +
+            buyP +
+            "</button>" +
+            '<button type="button" class="btn-track-lic" data-demo-buy="' +
+            esc(licMsg) +
+            '">Licence · ' +
+            licP +
+            "</button></div></div>"
+          );
+        })
+        .join("");
+
+      var formats = item.formats || ["Sans DRM", "MP3 320 kbps", "FLAC"];
+      var formatsHtml = formats.map(function (f) {
+        return "<li>" + esc(f) + "</li>";
+      }).join("");
+
+      var albumBuyMsg = "Acheter la release : " + item.title + " (" + euro(item.price) + " TTC, maquette)";
+      var wishMsg = "Liste de souhaits (démo) : " + item.title;
+      var packLicMsg =
+        "Pack licences album : " +
+        item.title +
+        " — devis / contrat global (fictif). En prod : somme ou négociation par catalogue.";
+
+      var others = CATALOG.filter(function (x) {
+        return x.artist === item.artist && x.id !== item.id;
+      }).slice(0, 4);
+      var moreHtml = others
+        .map(function (x) {
+          return (
+            '<div class="bc-more-card" data-more-id="' +
+            esc(x.id) +
+            '" role="button" tabindex="0"><div class="bc-more-art" style="background:' +
+            x.grad +
+            '"></div><p>' +
+            esc(x.title) +
+            "</p></div>"
+          );
+        })
+        .join("");
+
+      var moreSection =
+        moreHtml.length > 0
+          ? '<section class="bc-section"><h4>Plus de ' +
+            esc(item.artist) +
+            '</h4><div class="bc-more-grid">' +
+            moreHtml +
+            "</div></section>"
+          : "";
+
+      var coverSafe = item.coverImage ? String(item.coverImage).replace(/[^a-zA-Z0-9\-_./]/g, "") : "";
+      var sideArt = item.coverImage
+        ? '<div class="bc-side-art bc-side-art--img"><img src="' +
+          coverSafe +
+          '" alt="' +
+          esc(item.title + " — pochette") +
+          '" /></div>'
+        : '<div class="bc-side-art" style="background:' + item.grad + '"></div>';
+
+      var firstAud = null;
+      for (var ti = 0; ti < item.tracks.length; ti++) {
+        if (item.tracks[ti].audioFile) {
+          firstAud = item.tracks[ti];
+          break;
+        }
+      }
+      var playAllBtn = firstAud
+        ? '<button type="button" class="btn btn-ghost" data-preview-url="' +
+          audioUrl(firstAud.audioFile) +
+          '" data-preview-label="' +
+          esc(item.title + " — " + firstAud.n) +
+          '">▶ Préécouter (1re piste)</button>'
+        : '<button type="button" class="btn btn-ghost" data-demo-buy="' +
+          esc("Aucun fichier audio lié à cette release dans audio/.") +
+          '">▶ Préécouter tout</button>';
+
+      return (
+        '<div class="bc-grid">' +
+        '<aside class="bc-aside">' +
+        sideArt +
+        '<div class="bc-side-panel">' +
+        '<div class="detail-price">' +
+        euro(item.price) +
+        "</div>" +
+        '<p class="bc-price-hint">Release numérique — objectif 92&nbsp;% pour le beatmaker après frais (BUCKCAMP).</p>' +
+        '<div class="bc-side-actions">' +
+        '<button type="button" class="btn btn-hot" data-demo-buy="' +
+        esc(albumBuyMsg) +
+        '">Acheter la release</button>' +
+        '<button type="button" class="btn btn-accent" data-demo-buy="' +
+        esc(packLicMsg) +
+        '">Pack licences (album)</button>' +
+        '<button type="button" class="btn btn-ghost" data-demo-buy="' +
+        esc(wishMsg) +
+        '">♥ Liste de souhaits</button>' +
+        playAllBtn +
+        "</div>" +
+        '<div class="bc-divider"></div>' +
+        '<div class="bc-share">' +
+        "<span>Partager</span>" +
+        '<button type="button" class="btn-micro" data-demo-buy="' +
+        esc("Lien public copié (fictif) : " + item.title) +
+        '">Copier lien</button>' +
+        '<button type="button" class="btn-micro" data-demo-buy="' +
+        esc("Code embed — iframe player à générer en prod.") +
+        '">Embed</button></div>' +
+        "<ul class=\"bc-formats\">" +
+        formatsHtml +
+        "</ul>" +
+        '<dl class="bc-meta-grid">' +
+        "<dt>Sortie</dt><dd>" +
+        esc(item.released || "—") +
+        "</dd>" +
+        "<dt>Lieu</dt><dd>" +
+        esc(item.location || "—") +
+        "</dd>" +
+        "<dt>Contient</dt><dd>" +
+        totalTracks +
+        " morceau" +
+        (totalTracks > 1 ? "x" : "") +
+        approx +
+        "</dd></dl>" +
+        '<p class="bc-fans">' +
+        (item.supporters != null ? item.supporters : 0) +
+        " soutiens sur cette release (démo)</p>" +
+        "</div></aside>" +
+        '<div class="bc-body">' +
+        '<p class="detail-type">' +
+        esc(typeLabel) +
+        " · " +
+        esc(String(item.bpm)) +
+        " BPM · tonalité " +
+        esc(item.key) +
+        "</p>" +
+        "<h1>" +
+        esc(item.title) +
+        "</h1>" +
+        '<p class="detail-artist">par <a href="#">' +
+        esc(item.artist) +
+        "</a></p>" +
+        '<div class="bc-tags-row">' +
+        item.tags
+          .map(function (t) {
+            return '<span class="tag">' + esc(t) + "</span>";
+          })
+          .join("") +
+        "</div>" +
+        '<p class="bc-lead">' +
+        esc(item.desc) +
+        "</p>" +
+        '<p class="detail-license" style="margin-bottom:1rem"><strong>Licence (release) :</strong> ' +
+        esc(item.license) +
+        "</p>" +
+        '<div class="tracklist-bc">' +
+        '<div class="tracklist-bc-top"><h3>Écoute &amp; achat par morceau</h3><p>' +
+        totalTracks +
+        " titres — chaque ligne : <strong>Acheter</strong> (fichier) ou <strong>Licence</strong> (usage commercial selon contrat).</p></div>" +
+        tracksHtml +
+        "</div>" +
+        '<section class="bc-section"><h4>À propos</h4><p>' +
+        esc(item.about || item.desc) +
+        "</p></section>" +
+        '<section class="bc-section"><h4>Crédits &amp; fiche technique</h4>' +
+        '<pre class="bc-credits-pre">' +
+        esc(item.credits || "—") +
+        "</pre></section>" +
+        moreSection +
+        "</div></div>"
+      );
+    }
+
+    function openDetail(id) {
+      var item = CATALOG.filter(function (x) {
+        return x.id === id;
+      })[0];
+      if (!item) return;
+      document.getElementById("detail-root").innerHTML = buildDetailHTML(item);
+      showView("detail");
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById("detail-root").addEventListener("click", function (e) {
+      var prev = e.target.closest("[data-preview-url]");
+      if (prev && prev.getAttribute("data-preview-url")) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.buckcampPlayPreview) {
+          window.buckcampPlayPreview(
+            prev.getAttribute("data-preview-url"),
+            prev.getAttribute("data-preview-label") || "",
+            prev
+          );
+        }
+        return;
+      }
+      var demo = e.target.closest("[data-demo-buy]");
+      if (demo) {
+        e.preventDefault();
+        var msg = demo.getAttribute("data-demo-buy") || "";
+        alert("BUCKCAMP (démo)\n\n" + msg + "\n\n→ Checkout, panier et compte utilisateur à brancher (ex. Stripe + API).");
+        return;
+      }
+      var more = e.target.closest(".bc-more-card");
+      if (more) {
+        var mid = more.getAttribute("data-more-id");
+        if (mid) openDetail(mid);
+      }
+    });
+
+    document.getElementById("detail-root").addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var more = e.target.closest(".bc-more-card");
+      if (more) {
+        e.preventDefault();
+        var mid = more.getAttribute("data-more-id");
+        if (mid) openDetail(mid);
+      }
+    });
+
+    var STORAGE_KEY = "buckcamp_demo_session";
+
+    function showView(name) {
+      document.getElementById("view-home").classList.toggle("is-active", name === "home");
+      document.getElementById("view-detail").classList.toggle("is-active", name === "detail");
+      document.getElementById("view-login").classList.toggle("is-active", name === "login");
+    }
+
+    function goHome() {
+      showView("home");
+      window.scrollTo(0, 0);
+    }
+
+    function getSession() {
+      try {
+        var raw = sessionStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function setSession(email) {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ email: email, at: Date.now() }));
+    }
+
+    function clearSession() {
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+
+    function updateAuthHeader() {
+      var s = getSession();
+      var pill = document.getElementById("user-pill");
+      var btnIn = document.getElementById("btn-connexion");
+      var btnOut = document.getElementById("btn-logout");
+      if (s && s.email) {
+        pill.textContent = s.email.split("@")[0] || "connecté";
+        pill.classList.remove("hidden");
+        btnIn.classList.add("hidden");
+        btnOut.classList.remove("hidden");
+      } else {
+        pill.classList.add("hidden");
+        btnIn.classList.remove("hidden");
+        btnOut.classList.add("hidden");
+      }
+    }
+
+    function resetLoginFormUI() {
+      var form = document.getElementById("login-form");
+      var ok = document.getElementById("login-success");
+      var load = document.getElementById("login-loading");
+      ok.classList.remove("is-visible");
+      load.classList.remove("is-visible");
+      form.classList.remove("auth-form-disabled");
+      document.querySelectorAll("#steps-list li").forEach(function (li, i) {
+        li.classList.toggle("is-next", i === 0);
+      });
+    }
+
+    function applyLoggedStepsState() {
+      document.querySelectorAll("#steps-list li").forEach(function (li, i) {
+        li.classList.toggle("is-next", i === 1);
+      });
+    }
+
+    document.getElementById("btn-back").addEventListener("click", goHome);
+    document.getElementById("btn-back-login").addEventListener("click", goHome);
+    document.getElementById("logo-home").addEventListener("click", function (e) {
+      e.preventDefault();
+      goHome();
+    });
+
+    function openLoginView() {
+      resetLoginFormUI();
+      if (getSession()) {
+        document.getElementById("login-success").classList.add("is-visible");
+        applyLoggedStepsState();
+      }
+      showView("login");
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById("btn-connexion").addEventListener("click", openLoginView);
+    document.getElementById("user-pill").addEventListener("click", openLoginView);
+
+    document.getElementById("btn-logout").addEventListener("click", function () {
+      clearSession();
+      updateAuthHeader();
+      resetLoginFormUI();
+      goHome();
+    });
+
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("login-email").value.trim() || "demo@buckcamp.local";
+      var form = document.getElementById("login-form");
+      var load = document.getElementById("login-loading");
+      var ok = document.getElementById("login-success");
+      load.classList.add("is-visible");
+      form.classList.add("auth-form-disabled");
+      setTimeout(function () {
+        load.classList.remove("is-visible");
+        setSession(email);
+        updateAuthHeader();
+        ok.classList.add("is-visible");
+        applyLoggedStepsState();
+        form.classList.remove("auth-form-disabled");
+      }, 900);
+    });
+
+    document.getElementById("link-signup").addEventListener("click", function (e) {
+      e.preventDefault();
+      document.getElementById("steps-list").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    updateAuthHeader();
+
+    document.querySelectorAll(".chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        document.querySelectorAll(".chip").forEach(function (c) {
+          c.classList.remove("is-on");
+        });
+        chip.classList.add("is-on");
+        renderGrid(chip.getAttribute("data-filter"));
+      });
+    });
+
+    document.getElementById("search-input").addEventListener("input", function () {
+      var q = this.value.trim().toLowerCase();
+      var grid = document.getElementById("catalog-grid");
+      if (!q) {
+        var active = document.querySelector(".chip.is-on");
+        renderGrid(active ? active.getAttribute("data-filter") : "all");
+        return;
+      }
+      var filtered = CATALOG.filter(function (item) {
+        var blob = (item.title + " " + item.artist + " " + item.tags.join(" ")).toLowerCase();
+        return blob.indexOf(q) >= 0;
+      });
+      grid.innerHTML = filtered.map(renderCard).join("");
+      grid.querySelectorAll(".card").forEach(function (el) {
+        el.addEventListener("click", function (e) {
+          var cp = e.target.closest(".card-play");
+          if (cp) {
+            e.stopPropagation();
+            var url = cp.getAttribute("data-preview-url");
+            if (url && window.buckcampPlayPreview) {
+              window.buckcampPlayPreview(url, cp.getAttribute("data-preview-label") || "", cp);
+            }
+            return;
+          }
+          openDetail(el.getAttribute("data-id"));
+        });
+      });
+    });
+
+    function initDropCampaign() {
+      var end = new Date(DROP_CAMPAIGN.activeUntil);
+      var dropEl = document.getElementById("drop-hero");
+      var stdEl = document.getElementById("standard-hero");
+      var pageBg = document.getElementById("drop-page-bg-root");
+      if (!dropEl || !stdEl) return;
+
+      function onDropScroll() {
+        if (!pageBg || pageBg.classList.contains("hidden")) return;
+        var y = window.scrollY;
+        var bg = document.getElementById("drop-parallax-bg");
+        var ground = document.getElementById("drop-parallax-ground");
+        var frame = document.getElementById("drop-cover-frame");
+        if (bg) {
+          bg.style.transform = "translate3d(0," + (y * 0.12).toFixed(2) + "px, 0)";
+        }
+        if (ground) {
+          ground.style.transform = "translate3d(0," + (y * 0.28).toFixed(2) + "px, 0)";
+        }
+        if (frame) {
+          var ty = y * 0.36;
+          var rx = Math.min(10, y * 0.032);
+          frame.style.transform =
+            "perspective(1100px) translate3d(0," +
+            ty.toFixed(2) +
+            "px, 0) rotateX(" +
+            rx.toFixed(2) +
+            "deg)";
+        }
+        var h = dropEl.offsetHeight || 640;
+        var fadeStart = h * 0.35;
+        var fadeEnd = h + 80;
+        if (y <= fadeStart) {
+          pageBg.style.opacity = "1";
+          pageBg.classList.remove("is-faded");
+        } else if (y >= fadeEnd) {
+          pageBg.style.opacity = "0";
+          pageBg.classList.add("is-faded");
+        } else {
+          var t = (y - fadeStart) / (fadeEnd - fadeStart);
+          pageBg.style.opacity = (1 - t).toFixed(3);
+          pageBg.classList.toggle("is-faded", t > 0.95);
+        }
+      }
+
+      if (Date.now() < end.getTime()) {
+        dropEl.classList.remove("hidden");
+        stdEl.classList.add("hidden");
+        if (pageBg) {
+          pageBg.classList.remove("hidden");
+          pageBg.style.opacity = "1";
+          pageBg.classList.remove("is-faded");
+        }
+        var aid = DROP_CAMPAIGN.albumId;
+        function goAlbum() {
+          openDetail(aid);
+        }
+        var bBuy = document.getElementById("drop-btn-buy");
+        var bPrev = document.getElementById("drop-btn-preview");
+        var bPlay = document.getElementById("drop-btn-play-fake");
+        if (bBuy) bBuy.addEventListener("click", goAlbum);
+        if (bPrev) bPrev.addEventListener("click", goAlbum);
+        var dropItem = CATALOG.filter(function (x) {
+          return x.id === aid;
+        })[0];
+        var dropPrevUrl = dropItem ? getItemPreviewUrl(dropItem) : "";
+        var dropPrevLabel = dropItem ? getItemPreviewLabel(dropItem) : "";
+        if (!dropPrevUrl && MAELSTROM_FILES[0]) {
+          dropPrevUrl = audioUrl(MAELSTROM_FILES[0]);
+          dropPrevLabel = "MOZARFMUZIK — " + MAELSTROM_TITLES[0];
+        }
+        if (bPlay && dropPrevUrl) {
+          bPlay.setAttribute("data-preview-url", dropPrevUrl);
+          bPlay.setAttribute("data-preview-label", dropPrevLabel);
+        }
+        if (bPlay) {
+          bPlay.addEventListener("click", function (e) {
+            var url = bPlay.getAttribute("data-preview-url");
+            if (url && window.buckcampPlayPreview) {
+              e.preventDefault();
+              e.stopPropagation();
+              window.buckcampPlayPreview(url, bPlay.getAttribute("data-preview-label") || "", bPlay);
+              return;
+            }
+            goAlbum();
+          });
+        }
+        window.addEventListener("scroll", onDropScroll, { passive: true });
+        window.addEventListener("resize", onDropScroll, { passive: true });
+        onDropScroll();
+      } else {
+        dropEl.classList.add("hidden");
+        stdEl.classList.remove("hidden");
+        if (pageBg) pageBg.classList.add("hidden");
+      }
+    }
+
+    initBuckcampAudio();
+    renderGrid("all");
+    initDropCampaign();
+  </script>
+</body>
+</html>

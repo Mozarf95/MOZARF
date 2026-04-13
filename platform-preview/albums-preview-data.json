@@ -1,0 +1,197 @@
+{
+  "_doc": "Aligner 'section' sur COPIE DE MOZARF THEME/templates/collection.albums.json (+ réglages section dans l’éditeur). Les produits remplacent la collection Shopify en local uniquement.",
+  "section": {
+    "brand_html": "MOZ<span>ARF</span>",
+    "search_placeholder": "Beats, albums, producteurs…",
+    "sell_url": "",
+    "catalog_heading": "Catalogue démo",
+    "footer_text": "MOZARF — prévisualisation locale (thème Shopify)",
+    "login_intro": "Prévisualisation locale.",
+    "login_hint": "Démo locale : formulaire factice.",
+    "login_success_note": "",
+    "login_signup_note": "",
+    "steps_lead": "Feuille de route indicative.",
+    "drop_product_handle": "",
+    "drop_active_until": "2000-01-01T00:00:00"
+  },
+  "session": {
+    "guest": true,
+    "cart_item_count": 0
+  },
+  "routes": {
+    "root_url": "/",
+    "account_login_url": "/account/login",
+    "account_register_url": "/account/register",
+    "account_url": "/account",
+    "account_logout_url": "/account/logout",
+    "cart_url": "/cart"
+  },
+  "products": [
+    {
+      "id": 91001,
+      "handle": "gloria-imperi",
+      "title": "Gloria Imperi",
+      "vendor": "MOZARFMUZIK",
+      "product_type": "Album",
+      "price_cents": 2200,
+      "price_formatted": "22,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "album",
+        "krump",
+        "cinéma"
+      ],
+      "description_plain": "Album maquette — esthétique monochrome, tension cinématographique et énergie krump.",
+      "published_at": "8 avr. 2026",
+      "image": "https://placehold.co/800x800/1a1a1a/e8ff4a/png?text=Gloria+Imperi",
+      "description": "Album maquette — esthétique monochrome, tension cinématographique et énergie krump."
+    },
+    {
+      "id": 91002,
+      "handle": "maelstrom",
+      "title": "MAELSTROM",
+      "vendor": "MOZARFMUZIK",
+      "product_type": "Album",
+      "price_cents": 2800,
+      "price_formatted": "28,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "album",
+        "krump"
+      ],
+      "description_plain": "10 titres — démo catalogue BUCKCAMP / MOZARF.",
+      "published_at": "2025",
+      "image": "https://placehold.co/800x800/2a1018/ff3d5c/png?text=MAELSTROM",
+      "description": "10 titres — démo catalogue BUCKCAMP / MOZARF."
+    },
+    {
+      "id": 91003,
+      "handle": "session-debutant-vol-1",
+      "title": "SESSION DÉBUTANT VOL.1",
+      "vendor": "BEAT COLLECTIF",
+      "product_type": "Album",
+      "price_cents": 3500,
+      "price_formatted": "35,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "pack",
+        "débutant",
+        "album"
+      ],
+      "description_plain": "12 morceaux pour entrer dans le son krump.",
+      "published_at": "15 janv. 2025",
+      "image": "https://placehold.co/800x800/2a1f08/ffc233/png?text=SESSION+VOL1",
+      "description": "12 morceaux pour entrer dans le son krump."
+    },
+    {
+      "id": 91004,
+      "handle": "expert-championship-kit",
+      "title": "EXPERT — CHAMPIONSHIP KIT",
+      "vendor": "CYPH K",
+      "product_type": "Album",
+      "price_cents": 5500,
+      "price_formatted": "55,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "pack",
+        "expert",
+        "hot",
+        "album"
+      ],
+      "description_plain": "15 morceaux, variations de BPM et de tension pour battles avancés.",
+      "published_at": "3 avril 2025",
+      "image": "https://placehold.co/800x800/1a0828/e8ff4a/png?text=CHAMPIONSHIP",
+      "description": "15 morceaux, variations de BPM et de tension pour battles avancés."
+    },
+    {
+      "id": 91005,
+      "handle": "night-sessions",
+      "title": "NIGHT SESSIONS",
+      "vendor": "MOZARF",
+      "product_type": "Album",
+      "price_cents": 4200,
+      "price_formatted": "42,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "album",
+        "story"
+      ],
+      "description_plain": "14 morceaux, arc d’une soirée session jusqu’au matin.",
+      "published_at": "8 avril 2025",
+      "image": "https://placehold.co/800x800/0a1628/4d8f82/png?text=NIGHT+SESSIONS",
+      "description": "14 morceaux, arc d’une soirée session jusqu’au matin."
+    },
+    {
+      "id": 92001,
+      "handle": "iron-stomp",
+      "title": "IRON STOMP",
+      "vendor": "CYPH K",
+      "product_type": "Single",
+      "price_cents": 1500,
+      "price_formatted": "15,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "krump",
+        "session"
+      ],
+      "description_plain": "Kick lourd, silence tactique, drop pour battle.",
+      "published_at": "12 mars 2025",
+      "image": "https://placehold.co/800x800/1a0a0a/ff3d5c/png?text=IRON+STOMP",
+      "description": "Kick lourd, silence tactique, drop pour battle."
+    },
+    {
+      "id": 92002,
+      "handle": "glitch-knee",
+      "title": "GLITCH KNEE",
+      "vendor": "RAW SECTION",
+      "product_type": "Single",
+      "price_cents": 1200,
+      "price_formatted": "12,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "krump",
+        "expé"
+      ],
+      "description_plain": "Texture glitch + gros 808.",
+      "published_at": "2 avril 2025",
+      "image": "https://placehold.co/800x800/0e1a12/e8ff4a/png?text=GLITCH+KNEE",
+      "description": "Texture glitch + gros 808."
+    },
+    {
+      "id": 92003,
+      "handle": "hall-of-sweat",
+      "title": "HALL OF SWEAT",
+      "vendor": "MOZARF",
+      "product_type": "Single",
+      "price_cents": 1800,
+      "price_formatted": "18,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "krump",
+        "anthem"
+      ],
+      "description_plain": "Ambiance salle, montée progressive.",
+      "published_at": "28 févr. 2025",
+      "image": "https://placehold.co/800x800/121820/ffc233/png?text=HALL+OF+SWEAT",
+      "description": "Ambiance salle, montée progressive."
+    },
+    {
+      "id": 92004,
+      "handle": "concrete-soul",
+      "title": "CONCRETE SOUL",
+      "vendor": "RAW SECTION",
+      "product_type": "Single",
+      "price_cents": 1500,
+      "price_formatted": "15,00 €",
+      "url": "https://www.mozarf.com/collections/frontpage",
+      "tags": [
+        "krump",
+        "minimal"
+      ],
+      "description_plain": "Minimal, gros espace pour le corps.",
+      "published_at": "20 mars 2025",
+      "image": "https://placehold.co/800x800/1c1c1c/e8ff4a/png?text=CONCRETE+SOUL",
+      "description": "Minimal, gros espace pour le corps."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{%- assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id -%}
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign ratio = 1
+    assign tracks_list = card_product.metafields.mozarf.tracklist.value
+    if card_product.featured_media and media_aspect_ratio == 'portrait'
+      assign ratio = 0.8
+    elsif card_product.featured_media and media_aspect_ratio == 'adapt'
+      assign ratio = card_product.featured_media.aspect_ratio
+    endif
+    if ratio == 0 or ratio == nil
+      assign ratio = 1
+    endif
+  -%}
+  {% capture mozarf_album_tracks -%}
+{% render 'mozarf-tracklist-json', tracks_list: tracks_list %}
+  {%- endcapture %}
+  <div
+    class="card-wrapper underline-links-hover"
+    data-mozarf-album='{"title":{{ card_product.title | json }},"artist":{{ card_product.vendor | default: "MOZARF" | json }},"cover":{% if card_product.featured_media != blank %}{{ card_product.featured_media | image_url: width: 200 | json }}{% else %}""{% endif %},"tracks":{{ mozarf_album_tracks | strip }}}'
+  >

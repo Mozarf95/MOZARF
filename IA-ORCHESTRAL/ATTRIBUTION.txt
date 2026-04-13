@@ -1,0 +1,11 @@
+Piano — échantillons « Salamander Grand Piano »
+==============================================
+
+Fichiers depuis https://tambien.github.io/Piano/audio/ — pack Salamander Grand Piano.
+
+  • Enregistrements : Alexander Holm
+  • Licence : CC BY 3.0 — https://archive.org/details/SalamanderGrandPianoV3
+
+Code : tone (MIT), @tonejs/piano (MIT).
+
+Téléchargement local : npm run fetch-samples → public/piano-audio/

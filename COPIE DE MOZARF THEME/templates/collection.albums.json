@@ -1,0 +1,22 @@
+{
+  "layout": "theme.mozarf-platform",
+  "sections": {
+    "mozarf_platform_catalog": {
+      "type": "mozarf-platform-catalog",
+      "settings": {
+        "show_drop_banner": false,
+        "show_hero_section": false,
+        "show_bio_section": false,
+        "catalog_heading": "Catalogue démo",
+        "footer_text": "MOZARF — prévisualisation locale (thème Shopify)",
+        "login_intro": "Prévisualisation locale.",
+        "login_hint": "Démo locale : formulaire factice.",
+        "login_success_note": "",
+        "login_signup_note": "",
+        "steps_lead": "Feuille de route indicative.",
+        "drop_active_until": "2000-01-01T00:00:00"
+      }
+    }
+  },
+  "order": ["mozarf_platform_catalog"]
+}

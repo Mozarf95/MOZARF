@@ -1,0 +1,460 @@
+/* MOZARF release — styles alignés sur la section Shopify (aperçu + thème) */
+.mozarf-release {
+  --mozarf-bg: #0a0a0b;
+  --mozarf-surface: #141416;
+  --mozarf-border: rgba(255, 255, 255, 0.08);
+  --mozarf-text: #f4f4f5;
+  --mozarf-muted: #a1a1aa;
+  --mozarf-accent-dim: #71717a;
+  --mozarf-player-h: 88px;
+  --mozarf-radius: 12px;
+  --mozarf-font: "DM Sans", system-ui, sans-serif;
+
+  font-family: var(--mozarf-font);
+  background: var(--mozarf-bg);
+  color: var(--mozarf-text);
+  line-height: 1.5;
+  padding-bottom: calc(var(--mozarf-player-h) + 24px);
+  isolation: isolate;
+  box-sizing: border-box;
+}
+
+.mozarf-release *,
+.mozarf-release *::before,
+.mozarf-release *::after {
+  box-sizing: border-box;
+}
+
+.mozarf-release.mozarf-release--fullbleed {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.mozarf-release a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mozarf-release .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(10, 10, 11, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--mozarf-border);
+}
+
+.mozarf-release .logo {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.mozarf-release .nav {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mozarf-muted);
+}
+
+.mozarf-release main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.mozarf-release .hero {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .mozarf-release .hero {
+    grid-template-columns: minmax(280px, 420px) 1fr;
+    gap: 3.5rem;
+  }
+}
+
+.mozarf-release .hero__art {
+  border-radius: var(--mozarf-radius);
+  overflow: hidden;
+  border: 1px solid var(--mozarf-border);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.mozarf-release .hero__art img,
+.mozarf-release .hero__art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.mozarf-release .eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mozarf-accent-dim);
+}
+
+.mozarf-release .title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.mozarf-release .artist {
+  margin: 0.35rem 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mozarf-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mozarf-release .tagline {
+  margin: 0 0 1.75rem;
+  max-width: 36ch;
+  color: var(--mozarf-muted);
+  font-size: 0.95rem;
+}
+
+.mozarf-release .hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.mozarf-release .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.35rem;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.mozarf-release .btn--primary {
+  background: var(--mozarf-text);
+  color: var(--mozarf-bg);
+}
+
+.mozarf-release .btn--ghost {
+  background: transparent;
+  color: var(--mozarf-text);
+  border-color: var(--mozarf-border);
+}
+
+.mozarf-release .btn--block {
+  width: 100%;
+}
+
+.mozarf-release .tracklist-section {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--mozarf-border);
+}
+
+.mozarf-release .section-title {
+  margin: 0 0 1.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mozarf-accent-dim);
+}
+
+.mozarf-release .tracklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: var(--mozarf-radius);
+  border: 1px solid var(--mozarf-border);
+  background: var(--mozarf-surface);
+  overflow: hidden;
+}
+
+.mozarf-release .track-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--mozarf-border);
+  font-size: 0.875rem;
+}
+
+.mozarf-release .track-row:last-child {
+  border-bottom: none;
+}
+
+.mozarf-release .track-row.is-active {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mozarf-release .track-row.is-locked {
+  opacity: 0.55;
+}
+
+.mozarf-release .track-num {
+  width: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--mozarf-accent-dim);
+  font-size: 0.8rem;
+}
+
+.mozarf-release .track-name {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+}
+
+.mozarf-release .track-dur {
+  font-variant-numeric: tabular-nums;
+  color: var(--mozarf-muted);
+  font-size: 0.8rem;
+}
+
+.mozarf-release .track-play {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--mozarf-border);
+  background: transparent;
+  color: var(--mozarf-text);
+  cursor: pointer;
+}
+
+.mozarf-release .track-play:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.mozarf-release .track-buy {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--mozarf-border);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.mozarf-release .purchase {
+  margin-top: 3rem;
+}
+
+.mozarf-release .purchase__card {
+  max-width: 480px;
+  padding: 1.75rem;
+  border-radius: var(--mozarf-radius);
+  border: 1px solid var(--mozarf-border);
+  background: var(--mozarf-surface);
+}
+
+.mozarf-release .formats {
+  margin: 0 0 1.5rem;
+  padding-left: 1.15rem;
+  color: var(--mozarf-muted);
+  font-size: 0.9rem;
+}
+
+.mozarf-release .fineprint {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  color: var(--mozarf-accent-dim);
+}
+
+.mozarf-release .site-footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--mozarf-accent-dim);
+  font-size: 0.75rem;
+}
+
+.mozarf-release .player-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  height: var(--mozarf-player-h);
+  background: rgba(12, 12, 14, 0.92);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--mozarf-border);
+  transform: translateY(100%);
+  transition: transform 0.28s ease;
+}
+
+.mozarf-release .player-bar.is-visible {
+  transform: translateY(0);
+}
+
+.mozarf-release .player-bar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 220px) auto 1fr auto;
+  align-items: center;
+  gap: 1rem 1.25rem;
+  padding: 0 1rem;
+}
+
+@media (max-width: 900px) {
+  .mozarf-release .player-bar__inner {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    height: auto;
+    min-height: var(--mozarf-player-h);
+    padding: 0.65rem 1rem 0.85rem;
+  }
+  .mozarf-release .player-bar__track {
+    grid-column: 1 / -1;
+  }
+  .mozarf-release .player-bar__scrub {
+    grid-column: 1 / -1;
+  }
+  .mozarf-release .player-bar__vol {
+    display: none;
+  }
+}
+
+.mozarf-release .player-bar__track {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.mozarf-release .player-bar__thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid var(--mozarf-border);
+  flex-shrink: 0;
+}
+
+.mozarf-release .player-bar__title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mozarf-release .player-bar__artist {
+  font-size: 0.65rem;
+  color: var(--mozarf-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mozarf-release .player-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mozarf-release .icon-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--mozarf-text);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mozarf-release .icon-btn--play {
+  width: 52px;
+  height: 52px;
+  background: var(--mozarf-text);
+  color: var(--mozarf-bg);
+}
+
+.mozarf-release .player-bar__scrub {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.mozarf-release .time {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
+  color: var(--mozarf-muted);
+  flex-shrink: 0;
+}
+
+.mozarf-release .scrub {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.mozarf-release .scrub__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--mozarf-text);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.mozarf-release .vol-range {
+  flex: 1;
+  accent-color: var(--mozarf-text);
+}
+
+.mozarf-release .player-bar.is-paused .ico-play {
+  display: block;
+}
+.mozarf-release .player-bar.is-paused .ico-pause {
+  display: none !important;
+}
+.mozarf-release .player-bar:not(.is-paused) .ico-play {
+  display: none;
+}
+.mozarf-release .player-bar:not(.is-paused) .ico-pause {
+  display: block !important;
+}

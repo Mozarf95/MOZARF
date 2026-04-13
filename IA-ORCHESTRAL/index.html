@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piano IA — MOZARF</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>window.TONE_SILENCE_LOGGING = true;</script>
+    <!-- React DevTools (standalone) : charge avant React ; lance « npm run dev:with-devtools » ou « npm run react-devtools » -->
+    <script>
+      (function () {
+        var h = location.hostname;
+        if (h !== "127.0.0.1" && h !== "localhost") return;
+        var s = document.createElement("script");
+        s.src = "http://localhost:8097";
+        s.async = true;
+        s.onerror = function () {
+          console.info(
+            "[Piano IA] React DevTools : dans un 2ᵉ terminal « npm run react-devtools », ou tout-en-un « npm run dev:with-devtools », puis recharge la page."
+          );
+        };
+        document.head.appendChild(s);
+      })();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

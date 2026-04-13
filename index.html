@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOZARF — prévisualisations locales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Schibsted+Grotesk:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0c0e;
+      --card: #141418;
+      --line: #2a2a32;
+      --ink: #f4f2ed;
+      --muted: #8a8694;
+      --accent: #e8ff4a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Schibsted Grotesk", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.5rem, 8vw, 3.5rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin: 0 0 0.25rem;
+    }
+    h1 span { color: var(--accent); }
+    .lead {
+      color: var(--muted);
+      margin: 0 0 2rem;
+      font-size: 0.95rem;
+    }
+    .cmd {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 2rem;
+      font-size: 0.82rem;
+    }
+    .cmd strong {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .cmd code {
+      display: block;
+      font-family: ui-monospace, monospace;
+      color: #c8d4e0;
+      word-break: break-all;
+      line-height: 1.45;
+    }
+    .cmd a {
+      color: var(--accent);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      margin-bottom: 0.85rem;
+    }
+    li a {
+      display: block;
+      padding: 1rem 1.15rem;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: border-color 0.15s ease, transform 0.12s ease;
+    }
+    li a:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    li a .t {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    li a .d {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+    footer {
+      margin-top: 2.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>MOZ<span>ARF</span> — prévisualisations</h1>
+    <p class="lead">
+      Sers ce dossier avec un petit serveur HTTP (obligatoire pour les assets). Ne pas ouvrir en <code>file://</code>.
+    </p>
+    <p style="margin: -1rem 0 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+      <a href="platform-preview/albums-page-confirm.html" style="display:inline-block;padding:0.65rem 1.1rem;background:#e8ff4a;color:#0c0c0e;font-weight:700;text-decoration:none;border-radius:8px;font-size:0.9rem;">→ Confirmer la page Albums (cible Shopify)</a>
+      <a href="shopify-preview.html" style="display:inline-block;padding:0.65rem 1.1rem;background:#2a2a32;color:#e8ff4a;font-weight:700;text-decoration:none;border-radius:8px;font-size:0.9rem;border:1px solid #3d3d48;">Interface Shopify (racine)</a>
+    </p>
+
+    <div class="cmd">
+      <strong>Terminal</strong>
+      <span style="display:block;color:#94a3b8;margin-bottom:0.4rem;">Depuis le dossier qui contient ce fichier <code style="color:#cbd5e1;">index.html</code> :</span>
+      <code>python3 -m http.server 8765</code>
+      <p style="margin: 0.75rem 0 0; color: var(--muted); font-size: 0.8rem;">
+        Puis ouvre <a href="http://127.0.0.1:8765/platform-preview/albums-page-confirm.html">…/platform-preview/albums-page-confirm.html</a> pour valider la page Albums, <a href="http://127.0.0.1:8765/shopify-preview.html">…/shopify-preview.html</a> pour l’autre preview, ou <a href="http://127.0.0.1:8765/">la racine</a> pour le menu.
+      </p>
+    </div>
+
+    <ul>
+      <li>
+        <a href="platform-preview/albums-page-confirm.html">
+          <div class="t">Page Albums — à confirmer avant publication</div>
+          <div class="d">
+            <code>platform-preview/albums-page-confirm.html</code> : même DOM + mêmes <code>mozarf-platform.css/js</code> que <strong>COPIE DE MOZARF THEME</strong> ; textes + produits dans <code>albums-preview-data.json</code>.
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="shopify-preview.html">
+          <div class="t">Interface Shopify (racine)</div>
+          <div class="d">
+            <code>shopify-preview.html</code> : même famille d’UI. Proche de <code>platform-preview/mozarf-shopify-preview.html</code>.
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="platform-preview/index.html">
+          <div class="t">Maquette BUCKCAMP complète</div>
+          <div class="d">
+            Catalogue démo inline, hero drop, bio, audio dans <code>platform-preview/audio/</code>.
+          </div>
+        </a>
+      </li>
+      <li>
+        <a href="shopify-mozarf-theme/preview/index.html">
+          <div class="t">Lecteur release seul (thème)</div>
+          <div class="d">
+            Bloc <code>mozarf-release-player</code> + CSS du thème, pour tester le player sans Shopify.
+          </div>
+        </a>
+      </li>
+    </ul>
+
+    <footer>MOZARF — fichiers locaux uniquement</footer>
+  </div>
+</body>
+</html>

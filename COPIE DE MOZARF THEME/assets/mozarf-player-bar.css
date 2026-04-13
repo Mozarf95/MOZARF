@@ -1,0 +1,131 @@
+/* MOZARF — Barre de lecture fixe */
+#mozarf-bar {
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  z-index: 99999;
+  transition: bottom 0.35s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 -2px 20px rgba(0,0,0,0.4);
+}
+
+#mozarf-bar.mozarf-bar--visible {
+  bottom: 0;
+}
+
+#mozarf-bar__cover {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #333;
+  flex-shrink: 0;
+}
+
+#mozarf-bar__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+#mozarf-bar__title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#mozarf-bar__artist {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#mozarf-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+#mozarf-bar__controls button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+#mozarf-bar__controls button:hover {
+  opacity: 1;
+}
+
+#mozarf-bar__play {
+  width: 44px;
+  height: 44px;
+  background: #fff !important;
+  color: #111 !important;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#mozarf-bar__close {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+#mozarf-bar__close:hover { opacity: 1; }
+/* Liste déroulante des pistes */
+#mozarf-tracklist {
+  position: fixed;
+  bottom: 70px;
+  left: 0;
+  width: 100%;
+  background: #111;
+  color: #fff;
+  z-index: 9998;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+}
+#mozarf-tracklist.mozarf-tracklist--visible {
+  display: block;
+}
+#mozarf-tracklist ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#mozarf-tracklist ul li {
+  padding: 12px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  font-size: 0.95rem;
+}
+#mozarf-tracklist ul li:hover {
+  background: #222;
+}
+#mozarf-tracklist ul li.active {
+  color: #fff;
+  font-weight: 700;
+}

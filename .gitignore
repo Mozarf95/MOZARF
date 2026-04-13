@@ -1,0 +1,33 @@
+# Système
+.DS_Store
+Thumbs.db
+*.log
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Dépendances
+node_modules/
+__pycache__/
+*.pyc
+.Python
+venv/
+.venv/
+
+# IDE / outils
+.idea/
+*.swp
+*.swo
+*~
+
+# Archives redondantes (garde les dossiers décompressés)
+*.zip
+
+# SDK VST3 : clone Git séparé dans ce dossier — ne pas imbriquer ici (sinon conflit de dépôts)
+# Sur l’autre PC : recloner depuis https://github.com/steinbergmedia/vst3sdk ou copier le dossier.
+vst3sdk/
+
+# À régénérer sur l’autre machine : cd IA-ORCHESTRAL && npm install
+IA-ORCHESTRAL/node_modules/

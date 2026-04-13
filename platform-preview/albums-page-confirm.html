@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prévisualisation — page Albums (identique au thème Shopify)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=UnifrakturMaguntia&display=swap"
+    rel="stylesheet"
+  />
+  <!-- Mêmes fichiers que la boutique : COPIE DE MOZARF THEME/assets/ -->
+  <link rel="stylesheet" href="../COPIE%20DE%20MOZARF%20THEME/assets/mozarf-platform.css" />
+  <style>
+    #mozarf-confirm-banner {
+      font-family: "Schibsted Grotesk", system-ui, sans-serif;
+      background: #1a1a22;
+      color: #e8e6e1;
+      border-bottom: 1px solid #2e2e38;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+    }
+    #mozarf-confirm-banner strong {
+      color: #e8ff4a;
+      font-weight: 700;
+    }
+    #mozarf-confirm-banner a {
+      color: #e8ff4a;
+    }
+    #mozarf-confirm-banner button {
+      float: right;
+      margin-left: 1rem;
+      background: transparent;
+      border: 1px solid #4a4a58;
+      color: #c8c4d0;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.72rem;
+    }
+    #mozarf-confirm-banner button:hover {
+      border-color: #e8ff4a;
+      color: #e8ff4a;
+    }
+    #mozarf-confirm-banner.is-hidden {
+      display: none;
+    }
+    #mozarf-platform-root .filters {
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <aside id="mozarf-confirm-banner" role="status">
+    <button type="button" id="mozarf-confirm-close" aria-label="Masquer le bandeau">Masquer</button>
+    <strong>Même rendu que Shopify</strong> — Le bloc ci-dessous copie le DOM de
+    <code>mozarf-platform-catalog.liquid</code> (drop/hero/bio désactivés). CSS/JS =
+    <code>COPIE DE MOZARF THEME/assets/mozarf-platform.*</code> (comme en ligne). Données texte + produits =
+    <code>albums-preview-data.json</code> (à garder aligné sur
+    <code>templates/collection.albums.json</code> + tes produits). ·
+    <a href="../index.html">Menu previews</a>
+  </aside>
+
+  <!-- Même enveloppe que sur Shopify (section JSON → .shopify-section) -->
+  <div class="shopify-section mozarf-platform-catalog-section">
+  <!-- Début : équivalent sortie Liquid (show_drop_banner / show_hero_section / show_bio_section = false) -->
+  <div id="mozarf-platform-root" data-skip-drop-campaign="true">
+    <header class="top">
+      <div class="top-inner">
+        <a href="/" class="brand" id="logo-home" aria-label="Accueil">MOZ<span>ARF</span></a>
+        <div class="search-wrap">
+          <input type="search" class="search" placeholder="Beats, albums, producteurs…" id="search-input" />
+        </div>
+        <div class="top-actions">
+          <span id="preview-sell-slot"></span>
+          <span id="user-pill" class="user-pill hidden" title="Compte"></span>
+          <a href="/account/login" class="btn btn-ghost" id="btn-connexion">Connexion</a>
+          <button type="button" class="btn btn-ghost hidden" id="btn-logout">Déconnexion</button>
+          <a href="/cart" class="btn btn-accent" id="btn-cart">Panier · 0</a>
+        </div>
+      </div>
+    </header>
+
+    <div id="view-home" class="view is-active">
+      <div id="drop-page-bg-root" class="drop-page-bg-root hidden" aria-hidden="true"></div>
+      <section id="drop-hero" class="drop-hero hidden" aria-hidden="true"></section>
+
+      <section
+        class="hero hidden"
+        id="standard-hero"
+        style="display:none!important;height:0;margin:0;padding:0;overflow:hidden;border:0;visibility:hidden"
+        aria-hidden="true"
+      ></section>
+
+      <div class="filters">
+        <span class="filters-label">Filtrer</span>
+        <button type="button" class="chip is-on" data-filter="all">Tout</button>
+        <button type="button" class="chip" data-filter="single">Singles</button>
+        <button type="button" class="chip" data-filter="album">Albums</button>
+      </div>
+
+      <div class="main">
+        <h2 class="section-title font-display" id="preview-catalog-heading">Catalogue démo</h2>
+        <div class="grid" id="catalog-grid"></div>
+      </div>
+    </div>
+
+    <div id="view-detail" class="view">
+      <div class="detail-back">
+        <button type="button" id="btn-back">← Retour au catalogue</button>
+      </div>
+      <article class="bc-release" id="detail-root"></article>
+    </div>
+
+    <div id="view-login" class="view">
+      <div class="auth-page">
+        <div class="auth-back">
+          <button type="button" id="btn-back-login">← Retour</button>
+        </div>
+        <header class="auth-head">
+          <h1 class="font-display">CONNEXION</h1>
+          <p id="preview-login-intro">Prévisualisation locale.</p>
+        </header>
+
+        <div class="auth-grid">
+          <div class="auth-panel">
+            <h2>Se connecter</h2>
+            <p class="auth-hint" id="preview-login-hint">Démo locale : formulaire factice.</p>
+            <div id="login-loading" class="auth-loading" aria-live="polite">Connexion en cours…</div>
+            <div id="login-success" class="auth-success" role="status">
+              <strong>Connecté (démo).</strong><span id="preview-login-success-tail"></span>
+            </div>
+            <form id="login-form" novalidate>
+              <div class="field">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" name="email" autocomplete="username" placeholder="toi@email.com" required />
+              </div>
+              <div class="field">
+                <label for="login-password">Mot de passe</label>
+                <input
+                  type="password"
+                  id="login-password"
+                  name="password"
+                  autocomplete="current-password"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 0.25rem">Entrer</button>
+            </form>
+            <p style="margin: 1rem 0 0; font-size: 0.85rem; color: var(--muted)">
+              <a href="/account/register" id="link-signup">Créer un compte</a><span id="preview-signup-suffix"></span>
+            </p>
+          </div>
+
+          <div class="auth-panel steps-panel">
+            <h2>Après connexion</h2>
+            <p class="steps-lead" id="preview-steps-lead">Feuille de route indicative.</p>
+            <ol class="steps-list" id="steps-list">
+              <li class="is-next" data-step="1">
+                Vérification du compte
+                <span>Email ou OTP.</span>
+              </li>
+              <li data-step="2">
+                Profil
+                <span>Infos et commandes.</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer id="preview-footer">MOZARF — prévisualisation locale (thème Shopify)</footer>
+
+    <div id="audio-dock" class="audio-dock hidden" aria-live="polite">
+      <div class="audio-dock-inner">
+        <button type="button" class="audio-dock-play" id="audio-dock-play" aria-label="Pause / lecture">❚❚</button>
+        <div class="audio-dock-meta">
+          <span class="audio-dock-title" id="audio-dock-title">Préécoute</span>
+          <span class="audio-dock-time" id="audio-dock-time">0:00 / 0:00</span>
+        </div>
+        <input type="range" class="audio-dock-seek" id="audio-dock-seek" min="0" max="1000" value="0" aria-label="Position dans la piste" />
+      </div>
+      <audio id="buckcamp-audio" preload="metadata"></audio>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    document.getElementById("mozarf-confirm-close")?.addEventListener("click", function () {
+      document.getElementById("mozarf-confirm-banner")?.classList.add("is-hidden");
+    });
+
+    var THEME_JS = "../COPIE%20DE%20MOZARF%20THEME/assets/mozarf-platform.js";
+
+    function applyPreviewData(data) {
+      var sec = data.section || {};
+      var routes = data.routes || {};
+      var session = data.session || { guest: true, cart_item_count: 0 };
+
+      var logo = document.getElementById("logo-home");
+      if (logo && sec.brand_html != null) logo.innerHTML = sec.brand_html;
+
+      if (routes.root_url != null) logo.setAttribute("href", routes.root_url);
+
+      var search = document.getElementById("search-input");
+      if (search && sec.search_placeholder != null) search.setAttribute("placeholder", sec.search_placeholder);
+
+      var sellSlot = document.getElementById("preview-sell-slot");
+      if (sellSlot) {
+        var su = (sec.sell_url || "").trim();
+        sellSlot.textContent = "";
+        if (su) {
+          var sa = document.createElement("a");
+          sa.href = su;
+          sa.className = "btn btn-ghost";
+          sa.textContent = "Vendre";
+          sellSlot.appendChild(sa);
+        } else {
+          var sb = document.createElement("button");
+          sb.type = "button";
+          sb.className = "btn btn-ghost";
+          sb.textContent = "Vendre";
+          sellSlot.appendChild(sb);
+        }
+      }
+
+      var conn = document.getElementById("btn-connexion");
+      var reg = document.getElementById("link-signup");
+      var cart = document.getElementById("btn-cart");
+      var logout = document.getElementById("btn-logout");
+      if (conn && routes.account_login_url) conn.setAttribute("href", routes.account_login_url);
+      if (reg && routes.account_register_url) reg.setAttribute("href", routes.account_register_url);
+      if (cart && routes.cart_url) cart.setAttribute("href", routes.cart_url);
+      if (logout && routes.account_logout_url) logout.setAttribute("href", routes.account_logout_url);
+
+      var count = typeof session.cart_item_count === "number" ? session.cart_item_count : 0;
+      if (cart) cart.textContent = "Panier · " + count;
+
+      if (sec.catalog_heading != null) {
+        var h = document.getElementById("preview-catalog-heading");
+        if (h) h.textContent = sec.catalog_heading;
+      }
+      if (sec.footer_text != null) {
+        var f = document.getElementById("preview-footer");
+        if (f) f.textContent = sec.footer_text;
+      }
+      if (sec.login_intro != null) {
+        var p = document.getElementById("preview-login-intro");
+        if (p) p.textContent = sec.login_intro;
+      }
+      if (sec.login_hint != null) {
+        var h2 = document.getElementById("preview-login-hint");
+        if (h2) h2.textContent = sec.login_hint;
+      }
+      var tail = document.getElementById("preview-login-success-tail");
+      if (tail) {
+        var n = (sec.login_success_note || "").trim();
+        tail.textContent = n ? " " + n : "";
+      }
+      var suf = document.getElementById("preview-signup-suffix");
+      if (suf) {
+        var sn = (sec.login_signup_note || "").trim();
+        suf.textContent = sn ? " — " + sn : "";
+      }
+      if (sec.steps_lead != null) {
+        var sl = document.getElementById("preview-steps-lead");
+        if (sl) sl.textContent = sec.steps_lead;
+      }
+
+      window.__MOZARF_SHOPIFY_STORE__ = true;
+      window.__MOZARF_DROP_HANDLE__ = (sec.drop_product_handle || "").trim();
+      window.__MOZARF_DROP_ACTIVE_UNTIL__ = (sec.drop_active_until || "2000-01-01T00:00:00").trim();
+      window.__MOZARF_SHOPIFY_PRODUCTS__ = Array.isArray(data.products) ? data.products : [];
+    }
+
+    function loadPlatformScript() {
+      var s = document.createElement("script");
+      s.src = THEME_JS;
+      document.body.appendChild(s);
+    }
+
+    fetch("albums-preview-data.json", { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        applyPreviewData(data);
+      })
+      .catch(function (err) {
+        console.error("[albums-page-confirm] albums-preview-data.json :", err);
+        window.__MOZARF_SHOPIFY_STORE__ = true;
+        window.__MOZARF_DROP_HANDLE__ = "";
+        window.__MOZARF_DROP_ACTIVE_UNTIL__ = "2000-01-01T00:00:00";
+        window.__MOZARF_SHOPIFY_PRODUCTS__ = [];
+      })
+      .finally(loadPlatformScript);
+  </script>
+</body>
+</html>

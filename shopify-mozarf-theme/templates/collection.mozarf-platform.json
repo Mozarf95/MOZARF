@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "mozarf-platform": {
+      "type": "mozarf-platform-catalog",
+      "settings": {}
+    }
+  },
+  "order": ["mozarf-platform"]
+}

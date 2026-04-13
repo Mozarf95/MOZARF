@@ -1,0 +1,528 @@
+{% comment %}
+  Maquette platform-preview (grille → fiche détail in-page).
+  Collections : modèle « Default » (collection.json), « mozarf-platform » ou « albums » (collection.albums.json).
+  Dans Admin → Collection → Thème : choisir ce modèle pour l’onglet menu ALBUMs si ce n’est pas le défaut.
+{% endcomment %}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=UnifrakturMaguntia&display=swap"
+  rel="stylesheet"
+/>
+{{ 'mozarf-platform.css' | asset_url | stylesheet_tag }}
+{% if section.settings.drop_cover != blank %}
+  <style>
+    #mozarf-platform-root {
+      --mozarf-drop-parallax-img: url({{ section.settings.drop_cover | image_url: width: 1600 }});
+    }
+  </style>
+{% endif %}
+{% if section.settings.show_drop_banner == false and section.settings.show_hero_section == false %}
+  <style>
+    #mozarf-platform-root .filters {
+      margin-top: 0.5rem;
+    }
+  </style>
+{% endif %}
+
+<div
+  id="mozarf-platform-root"
+  {% if section.settings.show_drop_banner == false and section.settings.show_hero_section == false %}
+    data-skip-drop-campaign="true"
+  {% endif %}
+>
+  <header class="top">
+    <div class="top-inner">
+      <a href="{{ routes.root_url }}" class="brand" id="logo-home" aria-label="Accueil">
+        {{- section.settings.brand_html -}}
+      </a>
+      <div class="search-wrap">
+        <input type="search" class="search" placeholder="{{ section.settings.search_placeholder | escape }}" id="search-input" />
+      </div>
+      <div class="top-actions">
+        {% if section.settings.sell_url != blank %}
+          <a href="{{ section.settings.sell_url }}" class="btn btn-ghost">Vendre</a>
+        {% else %}
+          <button type="button" class="btn btn-ghost">Vendre</button>
+        {% endif %}
+        {% if customer %}
+          <a href="{{ routes.account_url }}" class="user-pill" id="user-pill">{{ customer.first_name | default: customer.email | truncate: 18 }}</a>
+          <a href="{{ routes.account_logout_url }}" class="btn btn-ghost" id="btn-logout">Déconnexion</a>
+        {% else %}
+          <span id="user-pill" class="user-pill hidden" title="Compte"></span>
+          <a href="{{ routes.account_login_url }}" class="btn btn-ghost" id="btn-connexion">Connexion</a>
+          <button type="button" class="btn btn-ghost hidden" id="btn-logout">Déconnexion</button>
+        {% endif %}
+        <a href="{{ routes.cart_url }}" class="btn btn-accent">Panier · {{ cart.item_count }}</a>
+      </div>
+    </div>
+  </header>
+
+  <div id="view-home" class="view is-active">
+    {%- if section.settings.show_drop_banner -%}
+      <div id="drop-page-bg-root" class="drop-page-bg-root hidden" aria-hidden="true">
+        <div id="drop-parallax-bg" class="drop-parallax-bg"></div>
+        <div id="drop-parallax-ground" class="drop-parallax-ground"></div>
+        <div class="drop-parallax-scrim"></div>
+      </div>
+
+      <section id="drop-hero" class="drop-hero hidden" aria-label="Mise en avant sortie">
+        <div class="drop-hero-inner">
+          <div class="drop-copy">
+            <span class="drop-badge"><span class="drop-badge-dot" aria-hidden="true"></span> {{ section.settings.drop_badge_text | escape }}</span>
+            <p class="drop-artist-line">{{ section.settings.drop_artist | escape }}</p>
+            <h2 class="drop-title">{{ section.settings.drop_title | escape }}</h2>
+            <p class="drop-tagline">{{ section.settings.drop_tagline | escape }}</p>
+            <div class="drop-cta-row">
+              <button type="button" class="btn btn-hot" id="drop-btn-buy">Acheter l’album</button>
+              <button type="button" class="btn btn-outline-light" id="drop-btn-preview">Ouvrir la fiche &amp; preview</button>
+            </div>
+            <div class="drop-preview-strip">
+              <button type="button" class="drop-preview-play" id="drop-btn-play-fake" aria-label="Preview">▶</button>
+              <div class="drop-wave" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <p class="drop-preview-label">{{ section.settings.drop_preview_label | escape }}</p>
+            </div>
+          </div>
+          <div class="drop-cover-wrap" id="drop-cover-wrap">
+            <div class="drop-cover-frame" id="drop-cover-frame">
+              <div class="drop-cover-inner">
+                <span class="drop-cover-rim" aria-hidden="true"></span>
+                {% if section.settings.drop_cover != blank %}
+                  <img
+                    src="{{ section.settings.drop_cover | image_url: width: 800 }}"
+                    width="800"
+                    height="800"
+                    alt="{{ section.settings.drop_title | escape }}"
+                    loading="lazy"
+                  />
+                {% else %}
+                  <div style="width: min(420px, 100%); aspect-ratio: 1; background: var(--surface); border-radius: 4px"></div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    {%- else -%}
+      <div id="drop-page-bg-root" class="drop-page-bg-root hidden" aria-hidden="true"></div>
+      <section id="drop-hero" class="drop-hero hidden" aria-hidden="true"></section>
+    {%- endif -%}
+
+    {%- if section.settings.show_hero_section -%}
+      <section class="hero" id="standard-hero">
+        <div>
+          <h1 class="font-display">{{ section.settings.hero_title_html }}</h1>
+          <p class="hero-lead">{{ section.settings.hero_lead | escape }}</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <b id="stat-item-count">—</b>
+              <span>{{ section.settings.catalog_stat_label | escape }}</span>
+            </div>
+            <div class="stat">
+              <b>{{ section.settings.hero_stat_mid | escape }}</b>
+              <span>{{ section.settings.hero_stat_mid_label | escape }}</span>
+            </div>
+            <div class="stat">
+              <b>{{ section.settings.hero_stat_right | escape }}</b>
+              <span>{{ section.settings.hero_stat_right_label | escape }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <p>{{ section.settings.hero_card_kicker | escape }}</p>
+          <div class="big">{{ section.settings.hero_card_title | escape }}</div>
+          <p style="margin-top: 1rem; text-transform: none; letter-spacing: 0; font-weight: 500; line-height: 1.5">
+            {{ section.settings.hero_card_body | escape }}
+          </p>
+        </div>
+      </section>
+    {%- else -%}
+      <section
+        class="hero hidden"
+        id="standard-hero"
+        style="display:none!important;height:0;margin:0;padding:0;overflow:hidden;border:0;visibility:hidden"
+        aria-hidden="true"
+      ></section>
+    {%- endif -%}
+
+    {%- if section.settings.show_bio_section -%}
+      <section class="mozarf-bio" id="mozarf-bio">
+        <h2 class="font-display">{{ section.settings.bio_heading_html }}</h2>
+        <p class="highlight">{{ section.settings.bio_subheading | escape }}</p>
+        <div class="mozarf-bio-grid">
+          <div>
+            {{ section.settings.bio_column_1 }}
+          </div>
+          <div>
+            {{ section.settings.bio_column_2 }}
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+
+    <div class="filters">
+      <span class="filters-label">Filtrer</span>
+      <button type="button" class="chip is-on" data-filter="all">Tout</button>
+      <button type="button" class="chip" data-filter="single">Singles</button>
+      <button type="button" class="chip" data-filter="album">Albums</button>
+    </div>
+
+    <div class="main">
+      <h2 class="section-title font-display">{{ section.settings.catalog_heading | escape }}</h2>
+      <div class="grid" id="catalog-grid"></div>
+    </div>
+  </div>
+
+  <div id="view-detail" class="view">
+    <div class="detail-back">
+      <button type="button" id="btn-back">← Retour au catalogue</button>
+    </div>
+    <article class="bc-release" id="detail-root"></article>
+  </div>
+
+  <div id="view-login" class="view">
+    <div class="auth-page">
+      <div class="auth-back">
+        <button type="button" id="btn-back-login">← Retour</button>
+      </div>
+      <header class="auth-head">
+        <h1 class="font-display">CONNEXION</h1>
+        <p>{{ section.settings.login_intro | escape }}</p>
+      </header>
+
+      <div class="auth-grid">
+        <div class="auth-panel">
+          <h2>Se connecter</h2>
+          <p class="auth-hint">{{ section.settings.login_hint | escape }}</p>
+          <div id="login-loading" class="auth-loading" aria-live="polite">Connexion en cours…</div>
+          <div id="login-success" class="auth-success" role="status">
+            <strong>Connecté (démo).</strong>{% if section.settings.login_success_note != blank %} {{ section.settings.login_success_note | escape }}{% endif %}
+          </div>
+          <form id="login-form" novalidate>
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" name="email" autocomplete="username" placeholder="toi@email.com" required />
+            </div>
+            <div class="field">
+              <label for="login-password">Mot de passe</label>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                autocomplete="current-password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: 0.25rem">Entrer</button>
+          </form>
+          <p style="margin: 1rem 0 0; font-size: 0.85rem; color: var(--muted)">
+            <a href="{{ routes.account_register_url }}" id="link-signup">Créer un compte</a>{% if section.settings.login_signup_note != blank %} — {{ section.settings.login_signup_note | escape }}{% endif %}
+          </p>
+        </div>
+
+        <div class="auth-panel steps-panel">
+          <h2>Après connexion</h2>
+          <p class="steps-lead">{{ section.settings.steps_lead | escape }}</p>
+          <ol class="steps-list" id="steps-list">
+            <li class="is-next" data-step="1">
+              Vérification du compte
+              <span>Email ou OTP.</span>
+            </li>
+            <li data-step="2">
+              Profil
+              <span>Infos et commandes.</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>{{ section.settings.footer_text | escape }}</footer>
+
+  <div id="audio-dock" class="audio-dock hidden" aria-live="polite">
+    <div class="audio-dock-inner">
+      <button type="button" class="audio-dock-play" id="audio-dock-play" aria-label="Pause / lecture">❚❚</button>
+      <div class="audio-dock-meta">
+        <span class="audio-dock-title" id="audio-dock-title">Préécoute</span>
+        <span class="audio-dock-time" id="audio-dock-time">0:00 / 0:00</span>
+      </div>
+      <input type="range" class="audio-dock-seek" id="audio-dock-seek" min="0" max="1000" value="0" aria-label="Position dans la piste" />
+    </div>
+    <audio id="buckcamp-audio" preload="metadata"></audio>
+  </div>
+</div>
+
+<script>
+  window.__MOZARF_SHOPIFY_STORE__ = true;
+  window.__MOZARF_DROP_HANDLE__ = {{ section.settings.drop_product_handle | strip | json }};
+  window.__MOZARF_DROP_ACTIVE_UNTIL__ = {{ section.settings.drop_active_until | strip | json }};
+  window.__MOZARF_SHOPIFY_PRODUCTS__ = [
+    {%- comment -%} Jusqu’à 250 produits par page Liquid (max Shopify). Au-delà : paginer la collection (?page=2) ou scinder. {%- endcomment -%}
+    {%- paginate collection.products by 250 -%}
+      {%- for product in collection.products -%}
+      {
+        "id": {{ product.id | json }},
+        "handle": {{ product.handle | json }},
+        "title": {{ product.title | json }},
+        "vendor": {{ product.vendor | json }},
+        "product_type": {{ product.type | json }},
+        "price_cents": {{ product.selected_or_first_available_variant.price }},
+        "price_formatted": {{ product.selected_or_first_available_variant.price | money | json }},
+        "url": {{ product.url | json }},
+        "tags": {{ product.tags | json }},
+        "description": {{ product.description | json }},
+        "description_plain": {{ product.description | strip_html | truncate: 1200 | json }},
+        "published_at": {{ product.published_at | date: '%d %b %Y' | json }},
+        "image": {% if product.featured_image %}{{ product.featured_image | image_url: width: 1200 | json }}{% else %}""{% endif %}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    {%- endpaginate -%}
+  ];
+</script>
+<script src="{{ 'mozarf-platform.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "MOZARF — catalogue (maquette)",
+  "tag": "section",
+  "class": "mozarf-platform-catalog-section",
+  "settings": [
+    {
+      "type": "html",
+      "id": "brand_html",
+      "label": "Marque (HTML)",
+      "default": "MOZ<span>ARF</span>"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Placeholder recherche",
+      "default": "Beats, albums, producteurs…"
+    },
+    {
+      "type": "url",
+      "id": "sell_url",
+      "label": "Lien bouton Vendre (vide = bouton inactif)"
+    },
+    {
+      "type": "header",
+      "content": "Mise en page accueil"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_drop_banner",
+      "label": "Afficher la bannière sortie (drop)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero_section",
+      "label": "Afficher le hero standard",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bio_section",
+      "label": "Afficher la section bio",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Hero standard"
+    },
+    {
+      "type": "html",
+      "id": "hero_title_html",
+      "label": "Titre hero (HTML)",
+      "default": "SONS <em>KRUMP</em><br />PRIX JUSTE<br />92% AUX BEATMAKERS"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_lead",
+      "label": "Sous-titre hero",
+      "default": "Fiches complètes façon Bandcamp : pochette, formats, partage, crédits, liste de morceaux avec Acheter ou Licence par piste + achat album."
+    },
+    {
+      "type": "text",
+      "id": "catalog_stat_label",
+      "label": "Libellé sous le nombre d’items",
+      "default": "albums & produits"
+    },
+    {
+      "type": "text",
+      "id": "hero_stat_mid",
+      "label": "Stat milieu (valeur)",
+      "default": "15€"
+    },
+    {
+      "type": "text",
+      "id": "hero_stat_mid_label",
+      "label": "Stat milieu (libellé)",
+      "default": "exemple"
+    },
+    {
+      "type": "text",
+      "id": "hero_stat_right",
+      "label": "Stat droite (valeur)",
+      "default": "140"
+    },
+    {
+      "type": "text",
+      "id": "hero_stat_right_label",
+      "label": "Stat droite (libellé)",
+      "default": "BPM vibe"
+    },
+    {
+      "type": "text",
+      "id": "hero_card_kicker",
+      "label": "Carte hero — surtitre",
+      "default": "En piste cette semaine"
+    },
+    {
+      "type": "text",
+      "id": "hero_card_title",
+      "label": "Carte hero — titre",
+      "default": "MOZARF"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_card_body",
+      "label": "Carte hero — texte",
+      "default": "Catalogue aligné sur la maquette locale : clic album → fiche détail, puis achat sur la page produit Shopify."
+    },
+    {
+      "type": "header",
+      "content": "Bloc bio"
+    },
+    {
+      "type": "html",
+      "id": "bio_heading_html",
+      "label": "Titre bio (HTML)",
+      "default": "WHO IS <span>MOZARF</span>"
+    },
+    {
+      "type": "text",
+      "id": "bio_subheading",
+      "label": "Sous-titre bio",
+      "default": "MOZARFMUZIK · compositeur · Paris"
+    },
+    {
+      "type": "richtext",
+      "id": "bio_column_1",
+      "label": "Bio colonne 1"
+    },
+    {
+      "type": "richtext",
+      "id": "bio_column_2",
+      "label": "Bio colonne 2"
+    },
+    {
+      "type": "header",
+      "content": "Catalogue"
+    },
+    {
+      "type": "text",
+      "id": "catalog_heading",
+      "label": "Titre section grille",
+      "default": "Albums"
+    },
+    {
+      "type": "header",
+      "content": "Drop (bannière limitée)"
+    },
+    {
+      "type": "text",
+      "id": "drop_badge_text",
+      "label": "Badge drop",
+      "default": "Drop — fenêtre limitée"
+    },
+    {
+      "type": "text",
+      "id": "drop_artist",
+      "label": "Ligne artiste drop",
+      "default": "MOZARFMUZIK"
+    },
+    {
+      "type": "text",
+      "id": "drop_title",
+      "label": "Titre drop",
+      "default": "Gloria Imperi"
+    },
+    {
+      "type": "textarea",
+      "id": "drop_tagline",
+      "label": "Texte drop",
+      "default": "Nouvelle release en avant-première. Clic pour ouvrir la même fiche détail que le catalogue."
+    },
+    {
+      "type": "text",
+      "id": "drop_preview_label",
+      "label": "Label bande preview",
+      "default": "Preview · branche un extrait audio sur le produit Shopify si besoin"
+    },
+    {
+      "type": "image_picker",
+      "id": "drop_cover",
+      "label": "Image pochette (parallax + cadre)"
+    },
+    {
+      "type": "text",
+      "id": "drop_product_handle",
+      "label": "Handle produit mis en avant (ex: mon-album)",
+      "info": "Doit correspondre à un produit de cette collection pour lier les boutons du drop."
+    },
+    {
+      "type": "text",
+      "id": "drop_active_until",
+      "label": "Drop actif jusqu’à (ISO)",
+      "default": "2026-04-15T23:59:59",
+      "info": "Après cette date, le hero standard réapparaît. Fuseau : navigateur client."
+    },
+    {
+      "type": "header",
+      "content": "Pied de page & connexion"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer",
+      "default": "MOZARF — boutique officielle"
+    },
+    {
+      "type": "textarea",
+      "id": "login_intro",
+      "label": "Intro bloc connexion",
+      "default": "Prévisualisation locale."
+    },
+    {
+      "type": "text",
+      "id": "login_hint",
+      "label": "Connexion — hint",
+      "default": "Démo locale : formulaire factice."
+    },
+    {
+      "type": "text",
+      "id": "login_success_note",
+      "label": "Connexion — texte après « Connecté (démo). » (vide = comme maquette)",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "login_signup_note",
+      "label": "Texte après « Créer un compte » (vide = comme maquette)",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "steps_lead",
+      "label": "Intro colonne étapes",
+      "default": "Feuille de route indicative."
+    }
+  ],
+  "presets": [{ "name": "MOZARF catalogue (maquette)" }]
+}
+{% endschema %}
