@@ -1,0 +1,84 @@
+================================================================================
+  SYNCHRONISER TOUS TES PROJETS (Mac ↔ Windows / autre PC)
+================================================================================
+
+Principe : les "projets" sont des DOSSIERS sur le disque. Pour qu’ils vivent sur
+deux machines, il faut un COPIEUR fiable entre les deux :
+
+  • Git + dépôt distant (GitHub, GitLab, etc.)  — recommandé pour le code
+  • ou nuage (Dropbox, OneDrive, iCloud…)       — simple mais moins propre pour Git
+  • ou Syncthing (P2P)                          — sans GitHub
+
+Le compte Cursor synchronise surtout RÉGLAGES / EXTENSIONS, pas tous tes dossiers.
+Voir : Settings Sync dans la palette de commandes ("Turn on Settings Sync").
+
+--------------------------------------------------------------------------------
+CE QUE TU AS DANS  ~/Desktop/DEV  (au moment du guide)
+--------------------------------------------------------------------------------
+
+  SITE              → dépôt Git (voir aussi SYNC-Cursor-et-Windows.txt dans ce dossier)
+  IA-ORCHESTRAL     → dépôt Git séparé (node_modules ignoré)
+  PLUG              → dossier vide pour l’instant (rien à versionner)
+
+Autres dossiers sur le Bureau (Cubase, vidéos, etc.) : plutôt sauvegarde cloud ou disque.
+
+--------------------------------------------------------------------------------
+STRATÉGIE RECOMMANDÉE : UN DÉPÔT GIT PAR PROJET
+--------------------------------------------------------------------------------
+
+Pour chaque dossier de code important :
+
+  1. Crée un dépôt VIDE sur GitHub (privé si besoin).
+  2. Sur le Mac, dans CE dossier :
+
+       git init -b main          (si pas encore fait)
+       git add -A
+       git commit -m "Initial"
+       git remote add origin https://github.com/USER/NOM-DU-REPO.git
+       git push -u origin main
+
+  3. Sur l’autre PC :
+
+       git clone https://github.com/USER/NOM-DU-REPO.git
+
+  4. Travail quotidien : git pull avant, git commit + git push après.
+
+Noms d’exemple de dépôts :  site-mozarf ,  ia-orchestral ,  plug-xyz …
+
+--------------------------------------------------------------------------------
+RÉCAP PAR PROJET (chemin Mac)
+--------------------------------------------------------------------------------
+
+  ~/Desktop/DEV/SITE
+    • Git : oui
+    • Ignoré : vst3sdk/, gros binaires — voir .gitignore
+    • Guide : SYNC-Cursor-et-Windows.txt
+
+  ~/Desktop/DEV/IA-ORCHESTRAL
+    • Git : oui
+    • Ignoré : node_modules/, dist/
+    • Sur Windows après clone :  npm install
+
+  ~/Desktop/DEV/PLUG
+    • À remplir puis : git init comme ci-dessus quand tu auras des fichiers
+
+--------------------------------------------------------------------------------
+SI TU VEUX UN SEUL GROS DÉPÔ ("monorepo" DEV)
+--------------------------------------------------------------------------------
+
+Possible mais moins souple : un seul repo Git qui contient SITE + IA-ORCHESTRAL +
+PLUG. Il faudrait alors retirer le .git interne de SITE et tout gérer au niveau
+DEV — à faire seulement si tu maîtrises bien Git. La méthode "un repo par projet"
+est plus simple.
+
+--------------------------------------------------------------------------------
+CHECKLIST RAPIDE
+--------------------------------------------------------------------------------
+
+  [ ] Même compte Cursor sur les deux PC + Settings Sync activé
+  [ ] Un dépôt GitHub (ou autre) par projet
+  [ ] git push depuis le Mac pour chaque projet
+  [ ] git clone sur Windows pour chaque projet
+  [ ] npm install dans IA-ORCHESTRAL (et tout autre projet Node) sur Windows
+
+================================================================================

@@ -2,6 +2,9 @@
   SYNCHRONISER CURSOR (Mac) ↔ CURSOR (Windows) + CE PROJET SITE
 ================================================================================
 
+Pour synchroniser TOUS tes dossiers de code (SITE, IA-ORCHESTRAL, etc.) :
+voir le fichier  SYNC-TOUS-PROJETS.txt  dans ce même dossier.
+
 Il y a DEUX choses distinctes :
   A) Réglages / extensions Cursor (via le compte + Settings Sync)
   B) Fichiers du dossier SITE (via Git + GitHub ou autre dépôt distant)
