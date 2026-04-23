@@ -1,0 +1,22 @@
+{
+  "name": "gloria-imperi-parallax",
+  "version": "1.0.0",
+  "description": "Cinematic parallax video — Gloria Imperi by MOZARFMUZIK",
+  "scripts": {
+    "studio": "npx remotion studio",
+    "render": "npx remotion render GloriaImperi output/gloria-imperi.mp4",
+    "render:square": "npx remotion render GloriaImperi output/gloria-imperi-square.mp4 --width=1080 --height=1080",
+    "render:shorts": "npx remotion render GloriaImperi output/gloria-imperi-shorts.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.291",
+    "remotion": "4.0.291",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.4.5"
+  }
+}
