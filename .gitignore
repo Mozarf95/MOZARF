@@ -31,3 +31,7 @@ vst3sdk/
 
 # À régénérer sur l’autre machine : cd IA-ORCHESTRAL && npm install
 IA-ORCHESTRAL/node_modules/
+
+# MOZARFMUZIK
+mozarfmuzik/node_modules/
+mozarfmuzik/uploads/
