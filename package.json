@@ -1,0 +1,14 @@
+{
+  "name": "mozarf",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*",
+    "IA-ORCHESTRAL"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=IA-ORCHESTRAL",
+    "build": "npm run build --workspace=IA-ORCHESTRAL",
+    "ui": "npm run --workspace=packages/ui"
+  }
+}

@@ -29,5 +29,8 @@ venv/
 # Sur l’autre PC : recloner depuis https://github.com/steinbergmedia/vst3sdk ou copier le dossier.
 vst3sdk/
 
-# À régénérer sur l’autre machine : cd IA-ORCHESTRAL && npm install
+# À régénérer sur l’autre machine : npm install (racine monorepo)
+node_modules/
 IA-ORCHESTRAL/node_modules/
+IA-ORCHESTRAL/dist/
+packages/ui/node_modules/

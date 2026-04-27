@@ -13,6 +13,7 @@
     "fetch-samples": "node scripts/fetch-salamander-samples.mjs"
   },
   "dependencies": {
+    "@mozarf/ui": "*",
     "@tonejs/piano": "^0.2.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
@@ -20,8 +21,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.21",
     "concurrently": "^9.2.1",
+    "postcss": "^8.5.3",
     "react-devtools": "^7.0.1",
+    "tailwindcss": "^3.4.17",
     "vite": "^6.2.0"
   }
 }
