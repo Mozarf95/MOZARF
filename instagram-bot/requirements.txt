@@ -1,0 +1,7 @@
+instagrapi==2.1.2
+anthropic==0.40.0
+apscheduler==3.10.4
+pillow==10.4.0
+python-dotenv==1.0.0
+requests==2.32.3
+schedule==1.2.2

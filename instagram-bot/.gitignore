@@ -1,0 +1,9 @@
+.env
+session.json
+posted.json
+replied_comments.json
+__pycache__/
+*.pyc
+posts_queue/*/image.jpg
+posts_queue/*/image.jpeg
+posts_queue/*/image.png
