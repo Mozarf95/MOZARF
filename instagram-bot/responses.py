@@ -1,144 +1,161 @@
 """
-15 familles de réponses naturelles — variées pour ne jamais paraître robot.
-Chaque famille a plusieurs variantes pour éviter la répétition.
+15 familles de réponses — style MOZARF.
+Court, sec, bro, 🔥. Jamais trop en faire.
 """
 
 import random
 
-# 15 catégories de réponses selon le type de commentaire détecté
 RESPONSE_TEMPLATES = {
 
+    # Quelqu'un dit que c'est incroyable, magnifique, trop bien
     "compliment": [
-        "Merci bcp 🙏",
-        "Trop sympa merci !",
-        "Ça fait vraiment plaisir 🤍",
-        "Merci à toi 😊",
-        "On est contents que ça te plaise !",
-    ],
-
-    "question_prix": [
-        "Dispo sur notre site, le lien est en bio 👆",
-        "Tu trouveras tout en bio 🛒",
-        "Check le lien en bio pour les détails 🤍",
-        "Passe sur le site via le lien en bio !",
-    ],
-
-    "question_dispo": [
-        "Oui encore dispo ! Lien en bio pour commander 🔥",
-        "Quelques pièces restantes, fonce avant rupture 👀",
-        "Dispo sur le site, lien en bio !",
-        "Stock limité — le lien est en bio 🙏",
-    ],
-
-    "feu_love": [
-        "🔥🔥",
-        "Merci legend 🙏",
-        "On adore ton energy ❤️",
-        "🤍🤍",
-        "Ça motive vraiment merci 🙏",
-    ],
-
-    "collab": [
-        "Slide en DM on regarde ça 👀",
-        "Envoie nous un DM !",
-        "On écoute tout — DM ouvert 📩",
-        "DM nous avec ton projet 🤝",
-    ],
-
-    "livraison": [
-        "On livre partout 🌍 Lien en bio !",
-        "Livraison internationale disponible, check le site 📦",
-        "Partout en Europe et au-delà — lien en bio 🚀",
-    ],
-
-    "taille": [
-        "Le guide des tailles est sur le site 📐 Lien en bio",
-        "Check la fiche produit sur le site pour le sizing 🙏",
-        "On a un guide des tailles sur notre site, viens voir 👆",
-    ],
-
-    "tag_ami": [
-        "Trop love 🤍",
-        "Vos amis ont du goût 😏",
-        "On vous voit 👀🔥",
-        "Squad goals 🤍",
-    ],
-
-    "critique": [
-        "Merci pour le retour, on prend note 🙏",
-        "On entend ça, merci d'être honnête 🤍",
-        "Ton avis compte vraiment, merci 🙏",
-    ],
-
-    "emoji_only": [
-        "🤍",
+        "💪🔥",
         "🔥",
-        "😊🙏",
-        "❤️",
-        "🫶",
+        "💪",
+        "merci bro 🔥",
+        "🔥🔥",
     ],
 
+    # Quelqu'un demande le prix
+    "question_prix": [
+        "lien en bio 🔥",
+        "check le lien en bio bro",
+        "bio 🔥",
+        "tout est sur le site, lien en bio",
+    ],
+
+    # Quelqu'un demande si c'est encore dispo
+    "question_dispo": [
+        "encore dispo, fonce 🔥",
+        "lien en bio bro, vite",
+        "stock limité — bio 🔥",
+        "encore là pour l'instant 🔥",
+    ],
+
+    # Commentaire fire, emojis feu, "ouf", "énorme"
+    "feu_love": [
+        "🔥",
+        "💪🔥",
+        "c'est que le début bro 🔥",
+        "🔥🔥",
+        "merci bro",
+    ],
+
+    # Demande de collab ou partenariat
+    "collab": [
+        "DM 🔥",
+        "slide en DM bro",
+        "DM ouvert",
+        "envoie un DM on voit ça 🔥",
+    ],
+
+    # Question sur la livraison
+    "livraison": [
+        "on livre partout, check le site 🔥",
+        "lien en bio bro, tout est là",
+        "partout — bio 🔥",
+    ],
+
+    # Question sur les tailles
+    "taille": [
+        "guide des tailles sur le site, lien en bio",
+        "check la fiche produit bro 🔥",
+        "tout est sur le site, lien en bio",
+    ],
+
+    # Quelqu'un tague un ami
+    "tag_ami": [
+        "🔥🔥",
+        "vous avez le goût bro",
+        "👀🔥",
+        "💪",
+    ],
+
+    # Critique, "c'est pas mon style", "pas fan"
+    "critique": [
+        "au moins c'est arrivé jusqu'à toi, c'est une demi victoire",
+        "c'est pas pour tout le monde bro 🔥",
+        "ok bro",
+        "au moins tu l'as vu 🔥",
+    ],
+
+    # Commentaire d'un seul emoji ou très court
+    "emoji_only": [
+        "🔥",
+        "💪",
+        "🔥🔥",
+        "💪🔥",
+    ],
+
+    # Nouveau follower ou "je viens de m'abonner"
     "nouveau_follower": [
-        "Bienvenue dans la famille 🤍",
-        "Content de t'avoir ici !",
-        "Welcome 🙏🔥",
-        "Bienvenue ! ❤️",
+        "bienvenue bro 🔥",
+        "🔥",
+        "bienvenue dans le mouvement",
+        "💪🔥",
     ],
 
+    # "C'est pour quand", "vous sortez quoi", anticipation drop
     "hype": [
-        "On vous attend 🔥",
-        "Drop bientôt 👀",
-        "Stay tuned 🤫",
-        "Ça arrive ⏳🔥",
+        "bientôt bro 👀",
+        "ça arrive 🔥",
+        "patience 👀",
+        "très bientôt 🔥",
     ],
 
+    # Commentaire drôle, lol, mdr
     "humour": [
-        "😂😂 trop vrai",
-        "On va faire semblant de pas avoir vu ça 😅",
-        "Lmaooo 😭",
-        "Hahaha 🤍",
+        "😭🔥",
+        "lmao bro",
+        "😭😭",
+        "bro 😭🔥",
     ],
 
+    # Demande de repost ou "je veux être reposté"
     "repost_demande": [
-        "Tag-nous en story si tu portes nos pièces 🙏",
-        "On adore voir vos looks ! Tag @mozarf_paris 🤍",
-        "Montre-nous ton fit 📸",
+        "tag @mozarf_paris en story bro 🔥",
+        "montre le fit, on voit 👀",
+        "tag-nous 🔥",
     ],
 
+    # Tout le reste
     "general": [
-        "Merci 🙏",
-        "On apprécie 🤍",
-        "🤍🔥",
-        "Merci d'être là 🙏",
-        "Trop sympa !",
+        "🔥",
+        "merci bro",
+        "💪🔥",
+        "merci 🔥",
+        "💪",
     ],
 }
 
 
 def detect_category(comment: str) -> str:
-    """Détecte la catégorie du commentaire pour choisir la bonne réponse."""
     c = comment.lower()
 
-    if any(w in c for w in ["prix", "coûte", "combien", "tarif", "€", "euro"]):
+    if any(w in c for w in ["prix", "coûte", "combien", "tarif", "€", "euro", "ça coûte"]):
         return "question_prix"
-    if any(w in c for w in ["dispo", "disponible", "encore", "stock", "reste"]):
+    if any(w in c for w in ["dispo", "disponible", "encore", "stock", "reste", "rupture"]):
         return "question_dispo"
-    if any(w in c for w in ["livraison", "livre", "livrer", "expédition", "délai", "shipping"]):
+    if any(w in c for w in ["livraison", "livre", "livrer", "expédition", "délai", "shipping", "livré"]):
         return "livraison"
-    if any(w in c for w in ["taille", "size", "xl", "xs", "xs", "s ", " m ", "l ", "xl", "fitting"]):
+    if any(w in c for w in ["taille", "size", "xl", "xs", " s ", " m ", " l ", "fitting", "grand", "petit"]):
         return "taille"
-    if any(w in c for w in ["collab", "collaboration", "partenariat", "partnership", "deal"]):
+    if any(w in c for w in ["collab", "collaboration", "partenariat", "partnership", "deal", "travail"]):
         return "collab"
-    if any(w in c for w in ["🔥", "feu", "incroyable", "ouf", "🤩", "waouh", "wow", "énorme"]):
+    if any(w in c for w in ["🔥", "feu", "incroyable", "ouf", "🤩", "waouh", "wow", "énorme", "trop fort"]):
         return "feu_love"
-    if any(w in c for w in ["love", "j'adore", "trop beau", "magnifique", "superbe", "parfait", "❤️", "🤍"]):
+    if any(w in c for w in ["love", "j'adore", "trop beau", "magnifique", "superbe", "parfait", "❤️", "🤍", "beau", "belle"]):
         return "compliment"
-    if any(w in c for w in ["😂", "lol", "mdr", "ptdr", "haha", "💀"]):
+    if any(w in c for w in ["😂", "lol", "mdr", "ptdr", "haha", "💀", "mort", "😭"]):
         return "humour"
-    if any(w in c for w in ["bientôt", "quand", "drop", "sortie", "release", "new", "nouveau"]):
+    if any(w in c for w in ["bientôt", "quand", "drop", "sortie", "release", "new", "nouveau", "prochaine"]):
         return "hype"
-    if any(w in c for w in ["nul", "déçu", "pas bien", "mauvais", "décevant", "dommage"]):
+    if any(w in c for w in ["nul", "déçu", "pas bien", "mauvais", "décevant", "dommage", "pas mon style", "pas fan", "bof"]):
         return "critique"
+    if any(w in c for w in ["abonné", "suivi", "je follow", "je m'abonne", "nouveau follow"]):
+        return "nouveau_follower"
+    if any(w in c for w in ["repost", "reposté", "story", "tag"]):
+        return "repost_demande"
     if len(comment.strip()) <= 3:
         return "emoji_only"
 
@@ -146,7 +163,5 @@ def detect_category(comment: str) -> str:
 
 
 def get_response(comment: str) -> str:
-    """Retourne une réponse naturelle et aléatoire selon le commentaire."""
     category = detect_category(comment)
-    options = RESPONSE_TEMPLATES[category]
-    return random.choice(options)
+    return random.choice(RESPONSE_TEMPLATES[category])
