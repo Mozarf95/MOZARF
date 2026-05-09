@@ -103,6 +103,7 @@ RESPONSE_TEMPLATES = {
 
     # Nouveau follower ou "je viens de m'abonner"
     "nouveau_follower": [
+        "welcome home bro",
         "bienvenue bro 🔥",
         "🔥",
         "bienvenue dans le mouvement",
@@ -175,7 +176,7 @@ def detect_category(comment: str) -> str:
         return "hype"
     if any(w in c for w in ["nul", "déçu", "pas bien", "mauvais", "décevant", "dommage", "pas mon style", "pas fan", "bof"]):
         return "critique"
-    if any(w in c for w in ["abonné", "suivi", "je follow", "je m'abonne", "nouveau follow"]):
+    if any(w in c for w in ["abonné", "suivi", "je follow", "je m'abonne", "nouveau follow", "viens de m'abonner", "viens de follow", "just followed", "just subscribed", "new follower"]):
         return "nouveau_follower"
     if any(w in c for w in ["repost", "reposté", "story", "tag"]):
         return "repost_demande"
