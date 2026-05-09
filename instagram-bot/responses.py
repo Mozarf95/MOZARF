@@ -1,153 +1,152 @@
 """
 15 familles de réponses — style MOZARF.
-Court, sec, bro, 🔥. Jamais trop en faire.
+Compositeur / Producteur / DJ parisien. Bilingue FR/EN.
+Basé sur ses vraies réponses.
 """
 
 import random
 
 RESPONSE_TEMPLATES = {
 
-    # Quelqu'un dit que c'est incroyable, magnifique, trop bien
-    "compliment": [
-        "💪🔥",
-        "🔥",
-        "💪",
-        "merci bro 🔥",
-        "🔥🔥",
+    # "ton son est incroyable", "j'adore ta musique", "trop bien"
+    "compliment_musique": [
+        "🔥🔥🔥",
         "🙏🔥",
-        "💥",
+        "merci beaucoup 🙏🔥",
+        "thanks so much, really appreciate it 🙏",
+        "🔥🙏💪",
+        "🙏🙏🔥",
+        "💥🔥",
         "merci 🙏",
     ],
 
-    # Quelqu'un demande le prix
-    "question_prix": [
+    # "fan depuis le début", "je te suis depuis longtemps", "tu vas exploser"
+    "support_fan": [
+        "merci pour la confiance et le support, c'est que de la passion et du taff",
+        "c'est ce genre de message qui donne envie de continuer 🙏🔥",
+        "merci bro, ça touche vraiment 🙏",
+        "on continue 🔥🙏",
+        "le support ça compte énormément, merci 🙏💪",
+    ],
+
+    # "ce son m'a aidé", "j'écoute en boucle", "ça m'a accompagné"
+    "impact_emotionnel": [
+        "content de savoir que ma musique ai pu t'aider emotionnellement; c'est une satisfaction en tant que compositeur, transmettre des emotions c'est ce pour quoi je fais ca avant tout",
+        "c'est pour ça que je compose 🙏 merci de l'avoir ressenti comme ça",
+        "glad it hit bro 🙏🔥",
+        "transmettre des émotions c'est tout ce qui compte pour moi 🙏",
+        "ça c'est le plus beau compliment qu'on puisse me faire 🙏💪",
+    ],
+
+    # "où écouter ta musique ?", "t'es sur Spotify ?", "lien ?"
+    "ou_ecouter": [
         "lien en bio 🔥",
-        "check le lien en bio bro",
+        "check the bio bro 🔥",
+        "tout est en bio 🙏",
         "bio 🔥",
-        "tout est sur le site, lien en bio",
-        "lien en bio 🙏",
+        "Spotify / Apple Music — lien en bio 🙏",
     ],
 
-    # Quelqu'un demande si c'est encore dispo
-    "question_dispo": [
-        "encore dispo, fonce 🔥",
-        "lien en bio bro, vite",
-        "stock limité — bio 🔥",
-        "encore là pour l'instant 🔥",
-        "fonce 🙏",
-    ],
-
-    # Commentaire fire, emojis feu, "ouf", "énorme"
-    "feu_love": [
-        "🔥",
-        "💪🔥",
-        "c'est que le début bro 🔥",
-        "🔥🔥",
-        "merci bro",
-        "💥🔥",
-        "🙏💥",
-    ],
-
-    # Demande de collab ou partenariat
+    # demande de collab
     "collab": [
-        "DM 🔥",
-        "slide en DM bro",
-        "DM ouvert",
-        "envoie un DM on voit ça 🔥",
+        "DM me bro",
+        "slide in the DM 🔥",
         "DM 🙏",
+        "envoie un DM bro",
     ],
 
-    # Question sur la livraison
-    "livraison": [
-        "on livre partout, check le site 🔥",
-        "lien en bio bro, tout est là",
-        "partout — bio 🔥",
-    ],
-
-    # Question sur les tailles
-    "taille": [
-        "guide des tailles sur le site, lien en bio",
-        "check la fiche produit bro 🔥",
-        "tout est sur le site, lien en bio",
-    ],
-
-    # Quelqu'un tague un ami
-    "tag_ami": [
-        "🔥🔥",
-        "vous avez le goût bro",
-        "👀🔥",
-        "💪",
-        "🙏🔥",
-        "💥",
-    ],
-
-    # Critique, "c'est pas mon style", "pas fan"
+    # critique musicale, "j'aime pas ce style"
     "critique": [
-        "au moins c'est arrivé jusqu'à toi, c'est une demi victoire",
-        "c'est pas pour tout le monde bro 🔥",
-        "ok bro",
-        "au moins tu l'as vu 🔥",
-        "on fait pas pour tout le monde 🙏",
+        "merci du feedback 🔥",
+        "chacun ses goûts bro 🙏",
+        "au moins tu l'as écouté 🔥",
+        "merci du retour 🙏",
     ],
 
-    # Commentaire d'un seul emoji ou très court
-    "emoji_only": [
-        "🔥",
-        "💪",
-        "🔥🔥",
-        "💪🔥",
-        "🙏",
-        "💥",
-        "🤲",
-    ],
-
-    # Nouveau follower ou "je viens de m'abonner"
-    "nouveau_follower": [
-        "welcome home bro",
-        "bienvenue bro 🔥",
-        "🔥",
-        "bienvenue dans le mouvement",
-        "💪🔥",
-        "🙏 bienvenue",
-        "💥",
-    ],
-
-    # "C'est pour quand", "vous sortez quoi", anticipation drop
-    "hype": [
-        "bientôt bro 👀",
+    # "c'est pour quand", "nouveau son ?", "prochain drop ?"
+    "hype_drop": [
+        "bientôt bro 👀🔥",
         "ça arrive 🔥",
-        "patience 👀",
-        "très bientôt 🔥",
-        "bientôt 🙏",
+        "very soon 👀",
+        "patience 🙏",
+        "stay tuned 🔥",
         "💥 bientôt",
     ],
 
-    # Commentaire drôle, lol, mdr
+    # nouveau follower, "je viens de m'abonner"
+    "nouveau_follower": [
+        "welcome home bro",
+        "welcome bro 🔥",
+        "bienvenue dans le mouvement 🙏",
+        "glad you here bro 🔥",
+        "💥🔥",
+        "🙏 bienvenue",
+    ],
+
+    # quelqu'un tague un ami
+    "tag_ami": [
+        "🔥🔥",
+        "vous avez le goût bro 🔥",
+        "👀🔥",
+        "💪🔥",
+        "🙏🔥",
+    ],
+
+    # commentaire drôle, humour
     "humour": [
         "😭🔥",
-        "lmao bro",
-        "😭😭",
+        "lmao bro 😭",
         "bro 😭🔥",
+        "😭😭",
         "😭🙏",
     ],
 
-    # Demande de repost ou "je veux être reposté"
-    "repost_demande": [
-        "tag @mozarf_paris en story bro 🔥",
-        "montre le fit, on voit 👀",
-        "tag-nous 🔥",
-        "tag-nous 🙏",
+    # "tu m'inspires", "grâce à toi je compose"
+    "inspiration": [
+        "ça c'est tout ce que je veux entendre 🙏🔥",
+        "keep going bro 💪🔥",
+        "continue, le monde a besoin de ça 🙏",
+        "la musique c'est la meilleure chose qui soit 🙏🔥",
+        "🙏💪🔥",
     ],
 
-    # Tout le reste
+    # "t'as bossé avec qui ?", "qui a mixé ?", "quel logiciel ?"
+    "question_technique": [
+        "DM me bro pour les détails 🔥",
+        "on en parle en DM 🙏",
+        "slide in the DM 🔥",
+        "DM 🙏",
+    ],
+
+    # commentaire d'un seul emoji ou 1-2 mots
+    "emoji_only": [
+        "🔥",
+        "🙏",
+        "💪",
+        "💥",
+        "🔥🔥",
+        "🙏🔥",
+        "💪🔥",
+        "🤲",
+    ],
+
+    # repost, "je veux partager"
+    "repost_demande": [
+        "partage librement bro 🙏🔥",
+        "go bro 🔥",
+        "avec plaisir 🙏",
+        "spread the music 🔥",
+    ],
+
+    # tout le reste
     "general": [
         "🔥",
-        "merci bro",
-        "💪🔥",
-        "merci 🔥",
-        "💪",
         "🙏",
+        "merci bro 🔥",
+        "💪🔥",
+        "thanks bro 🙏",
         "💥",
+        "🙏🔥",
         "merci 🙏",
     ],
 }
@@ -156,30 +155,73 @@ RESPONSE_TEMPLATES = {
 def detect_category(comment: str) -> str:
     c = comment.lower()
 
-    if any(w in c for w in ["prix", "coûte", "combien", "tarif", "€", "euro", "ça coûte"]):
-        return "question_prix"
-    if any(w in c for w in ["dispo", "disponible", "encore", "stock", "reste", "rupture"]):
-        return "question_dispo"
-    if any(w in c for w in ["livraison", "livre", "livrer", "expédition", "délai", "shipping", "livré"]):
-        return "livraison"
-    if any(w in c for w in ["taille", "size", "xl", "xs", " s ", " m ", " l ", "fitting", "grand", "petit"]):
-        return "taille"
-    if any(w in c for w in ["collab", "collaboration", "partenariat", "partnership", "deal", "travail"]):
+    # Priorité haute — impact émotionnel
+    if any(w in c for w in ["m'a aidé", "m'accompagne", "en boucle", "dans ma vie", "m'a touché",
+                             "helped me", "on repeat", "cry", "pleuré", "émotions", "ressenti",
+                             "moments difficiles", "dur", "passe un cap"]):
+        return "impact_emotionnel"
+
+    # Support fan
+    if any(w in c for w in ["fan depuis", "te suis depuis", "depuis le début", "vas exploser",
+                             "tu vas péter", "depuis longtemps", "been following", "since day"]):
+        return "support_fan"
+
+    # Inspiration
+    if any(w in c for w in ["tu m'inspires", "grâce à toi", "j'ai commencé", "inspire",
+                             "inspired me", "because of you", "thanks to you"]):
+        return "inspiration"
+
+    # Où écouter
+    if any(w in c for w in ["où écouter", "ou ecouter", "t'es sur spotify", "apple music",
+                             "soundcloud", "où trouver", "lien musique", "where to listen",
+                             "how to listen", "streaming", "écouter ta musique"]):
+        return "ou_ecouter"
+
+    # Collab
+    if any(w in c for w in ["collab", "collaboration", "projet ensemble", "travailler ensemble",
+                             "work together", "feature", "feat", "deal", "partenariat"]):
         return "collab"
-    if any(w in c for w in ["🔥", "feu", "incroyable", "ouf", "🤩", "waouh", "wow", "énorme", "trop fort"]):
-        return "feu_love"
-    if any(w in c for w in ["love", "j'adore", "trop beau", "magnifique", "superbe", "parfait", "❤️", "🤍", "beau", "belle"]):
-        return "compliment"
-    if any(w in c for w in ["😂", "lol", "mdr", "ptdr", "haha", "💀", "mort", "😭"]):
-        return "humour"
-    if any(w in c for w in ["bientôt", "quand", "drop", "sortie", "release", "new", "nouveau", "prochaine"]):
-        return "hype"
-    if any(w in c for w in ["nul", "déçu", "pas bien", "mauvais", "décevant", "dommage", "pas mon style", "pas fan", "bof"]):
+
+    # Question technique
+    if any(w in c for w in ["logiciel", "daw", "fl studio", "ableton", "mix", "master",
+                             "sample", "plugin", "prod", "instrumentale", "beat", "comment tu fais"]):
+        return "question_technique"
+
+    # Critique
+    if any(w in c for w in ["j'aime pas", "pas fan", "pas mon style", "bof", "décevant",
+                             "déçu", "nul", "don't like", "not my style", "prefer"]):
         return "critique"
-    if any(w in c for w in ["abonné", "suivi", "je follow", "je m'abonne", "nouveau follow", "viens de m'abonner", "viens de follow", "just followed", "just subscribed", "new follower"]):
+
+    # Hype / prochain drop
+    if any(w in c for w in ["bientôt", "quand", "prochain", "next", "soon", "drop",
+                             "sortie", "release", "nouveau son", "new track", "new song"]):
+        return "hype_drop"
+
+    # Nouveau follower
+    if any(w in c for w in ["viens de m'abonner", "je m'abonne", "je follow", "just followed",
+                             "new follower", "just subscribed", "nouveau follow", "abonné"]):
         return "nouveau_follower"
-    if any(w in c for w in ["repost", "reposté", "story", "tag"]):
+
+    # Humour
+    if any(w in c for w in ["😂", "lol", "mdr", "ptdr", "haha", "💀", "mort", "😭", "dead"]):
+        return "humour"
+
+    # Tag ami
+    if "@" in c and len(c.split()) <= 4:
+        return "tag_ami"
+
+    # Repost
+    if any(w in c for w in ["partager", "repost", "share", "diffuser"]):
         return "repost_demande"
+
+    # Compliment musique
+    if any(w in c for w in ["incroyable", "magnifique", "trop bien", "j'adore", "love",
+                             "fire", "🔥", "ouf", "énorme", "wow", "amazing", "beautiful",
+                             "fantastic", "great", "excellent", "parfait", "❤️", "🤍",
+                             "masterpiece", "chef", "génie"]):
+        return "compliment_musique"
+
+    # Emoji seul
     if len(comment.strip()) <= 3:
         return "emoji_only"
 
