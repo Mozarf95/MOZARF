@@ -14,6 +14,9 @@ RESPONSE_TEMPLATES = {
         "💪",
         "merci bro 🔥",
         "🔥🔥",
+        "🙏🔥",
+        "💥",
+        "merci 🙏",
     ],
 
     # Quelqu'un demande le prix
@@ -22,6 +25,7 @@ RESPONSE_TEMPLATES = {
         "check le lien en bio bro",
         "bio 🔥",
         "tout est sur le site, lien en bio",
+        "lien en bio 🙏",
     ],
 
     # Quelqu'un demande si c'est encore dispo
@@ -30,6 +34,7 @@ RESPONSE_TEMPLATES = {
         "lien en bio bro, vite",
         "stock limité — bio 🔥",
         "encore là pour l'instant 🔥",
+        "fonce 🙏",
     ],
 
     # Commentaire fire, emojis feu, "ouf", "énorme"
@@ -39,6 +44,8 @@ RESPONSE_TEMPLATES = {
         "c'est que le début bro 🔥",
         "🔥🔥",
         "merci bro",
+        "💥🔥",
+        "🙏💥",
     ],
 
     # Demande de collab ou partenariat
@@ -47,6 +54,7 @@ RESPONSE_TEMPLATES = {
         "slide en DM bro",
         "DM ouvert",
         "envoie un DM on voit ça 🔥",
+        "DM 🙏",
     ],
 
     # Question sur la livraison
@@ -69,6 +77,8 @@ RESPONSE_TEMPLATES = {
         "vous avez le goût bro",
         "👀🔥",
         "💪",
+        "🙏🔥",
+        "💥",
     ],
 
     # Critique, "c'est pas mon style", "pas fan"
@@ -77,6 +87,7 @@ RESPONSE_TEMPLATES = {
         "c'est pas pour tout le monde bro 🔥",
         "ok bro",
         "au moins tu l'as vu 🔥",
+        "on fait pas pour tout le monde 🙏",
     ],
 
     # Commentaire d'un seul emoji ou très court
@@ -85,6 +96,9 @@ RESPONSE_TEMPLATES = {
         "💪",
         "🔥🔥",
         "💪🔥",
+        "🙏",
+        "💥",
+        "🤲",
     ],
 
     # Nouveau follower ou "je viens de m'abonner"
@@ -93,6 +107,8 @@ RESPONSE_TEMPLATES = {
         "🔥",
         "bienvenue dans le mouvement",
         "💪🔥",
+        "🙏 bienvenue",
+        "💥",
     ],
 
     # "C'est pour quand", "vous sortez quoi", anticipation drop
@@ -101,6 +117,8 @@ RESPONSE_TEMPLATES = {
         "ça arrive 🔥",
         "patience 👀",
         "très bientôt 🔥",
+        "bientôt 🙏",
+        "💥 bientôt",
     ],
 
     # Commentaire drôle, lol, mdr
@@ -109,6 +127,7 @@ RESPONSE_TEMPLATES = {
         "lmao bro",
         "😭😭",
         "bro 😭🔥",
+        "😭🙏",
     ],
 
     # Demande de repost ou "je veux être reposté"
@@ -116,6 +135,7 @@ RESPONSE_TEMPLATES = {
         "tag @mozarf_paris en story bro 🔥",
         "montre le fit, on voit 👀",
         "tag-nous 🔥",
+        "tag-nous 🙏",
     ],
 
     # Tout le reste
@@ -125,6 +145,9 @@ RESPONSE_TEMPLATES = {
         "💪🔥",
         "merci 🔥",
         "💪",
+        "🙏",
+        "💥",
+        "merci 🙏",
     ],
 }
 
