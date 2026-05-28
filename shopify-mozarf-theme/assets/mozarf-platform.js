@@ -297,6 +297,11 @@
         return String(t).toLowerCase();
       });
       if (!tags.length) tags = ["album"];
+      var freePreviewCount = 0;
+      tags.forEach(function (t) {
+        var m = t.match(/^preview-count:(\d+)$/);
+        if (m) freePreviewCount = parseInt(m[1], 10);
+      });
       var pt = (p.product_type && String(p.product_type).toLowerCase()) || "";
       var isSingle = pt.indexOf("single") >= 0;
       var img = p.image || "";
@@ -332,6 +337,7 @@
         tracks: [{ n: trackTitle, t: "—", tb: price, lb: lic }],
         productUrl: p.url || "",
         fromShopify: true,
+        freePreviewCount: freePreviewCount,
       };
     }
 
@@ -684,23 +690,26 @@
       var typeLabel = item.type === "album" ? "Album" : "Single";
       var totalTracks = item.tracks.length;
       var approx = item.approxMinutes ? " · ~" + item.approxMinutes + " min" : "";
+      var freeCount = (item.freePreviewCount > 0) ? item.freePreviewCount : 0;
       var tracksHtml = item.tracks
-        .map(function (tr) {
+        .map(function (tr, i) {
           var buyP = euro(trackPriceBuy(tr, item));
           var licP = euro(trackPriceLic(tr, item));
           var buyMsg = "Acheter la piste : " + tr.n + " (" + buyP + " TTC)";
           var licMsg = "Acheter la licence : " + tr.n + " (" + licP + ") — contrat PDF en production.";
-          var au = tr.audioFile ? audioUrl(tr.audioFile) : "";
+          var isLocked = freeCount > 0 && i >= freeCount;
+          var au = (!isLocked && tr.audioFile) ? audioUrl(tr.audioFile) : "";
           var audAttr =
             au !== ""
               ? ' data-preview-url="' + au + '" data-preview-label="' + esc(item.title + " — " + tr.n) + '"'
               : "";
+          var playBtn = isLocked
+            ? '<button type="button" class="track-play track-play--locked" aria-label="Débloqué après achat" disabled>🔒</button>'
+            : '<button type="button" class="track-play" aria-label="Préécouter"' + audAttr + ">▶</button>";
           return (
-            '<div class="track-row">' +
+            '<div class="track-row' + (isLocked ? " is-locked" : "") + '">' +
             '<div class="track-row-main">' +
-            '<button type="button" class="track-play" aria-label="Préécouter"' +
-            audAttr +
-            ">▶</button>" +
+            playBtn +
             '<span class="track-name">' +
             esc(tr.n) +
             '</span><span class="track-time">' +
