@@ -27,16 +27,22 @@
   {% capture mozarf_tracks_json %}
   [
     {%- assign need_comma = false -%}
+    {%- assign track_index = 0 -%}
     {%- for block in section.blocks -%}
       {%- if block.type == 'track' -%}
         {%- if need_comma -%},{%- endif -%}
+        {%- assign auto_locked = false -%}
+        {%- if section.settings.free_preview_count > 0 and track_index >= section.settings.free_preview_count -%}
+          {%- assign auto_locked = true -%}
+        {%- endif -%}
         {
           "title": {{ block.settings.title | json }},
           "src": {{ block.settings.audio_url | json }},
-          "previewOnly": {% if block.settings.locked %}true{% else %}false{% endif %},
+          "previewOnly": {% if block.settings.locked or auto_locked %}true{% else %}false{% endif %},
           "productUrl": {{ block.settings.product_url | json }}
         }
         {%- assign need_comma = true -%}
+        {%- assign track_index = track_index | plus: 1 -%}
       {%- endif -%}
     {%- endfor -%}
   ]
@@ -206,6 +212,13 @@
       "id": "only_this_collection_handle",
       "label": "Handle collection (affichage limité)",
       "default": "frontpage"
+    },
+    {
+      "type": "number",
+      "id": "free_preview_count",
+      "label": "Morceaux en pré-écoute libre (0 = tous disponibles)",
+      "info": "Ex. : 3 → seuls les 3 premiers morceaux sont écoutables ; les suivants sont verrouillés automatiquement.",
+      "default": 0
     },
     {
       "type": "checkbox",
